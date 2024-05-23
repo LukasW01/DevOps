@@ -1,0 +1,16 @@
+# lemmy_postgres.container
+[Container]
+AutoUpdate=registry
+ContainerName=lemmy_postgres
+EnvironmentFile=/mnt/container/lemmy/settings.env
+Exec=postgres -c 'session_preload_libraries=auto_explain' -c 'auto_explain.log_min_duration=5ms' -c 'auto_explain.log_analyze=true' -c 'track_activity_query_size=1048576'
+Image=docker.io/postgres:16-alpine
+Network=db.network
+PublishPort=5434:5432
+Volume=/mnt/container/lemmy/db:/var/lib/postgresql/data:Z
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

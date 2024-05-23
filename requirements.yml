@@ -1,0 +1,12 @@
+---
+roles:
+  - name: geerlingguy.security
+  - name: geerlingguy.ntp
+
+collections:
+  - name: community.docker
+  - name: community.general
+  - name: community.crypto
+  - name: ansible.posix
+  - name: containers.podman
+  - name: chocolatey.chocolatey

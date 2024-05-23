@@ -1,0 +1,18 @@
+# app.container
+[Container]
+AutoUpdate=registry
+Image=quay.io/prometheus/node-exporter:latest
+Exec='--path.procfs=/host/proc' '--path.sysfs=/host/sys' '--path.rootfs=/rootfs'
+Label=prometheus-job=node-exporter prometheus-port=9100 prometheus-path=/metrics
+Network=backend.network
+PodmanArgs=--privileged
+Volume=/proc:/host/proc:ro
+Volume=/sys:/host/sys:ro
+Volume=/:/rootfs:ro
+PublishPort=4000:9100
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

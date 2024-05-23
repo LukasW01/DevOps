@@ -1,0 +1,6 @@
+---
+- name: Include selinux
+  ansible.builtin.include_tasks: selinux.yml
+
+- name: Include firewall
+  ansible.builtin.include_tasks: firewall.yml

@@ -1,0 +1,16 @@
+# postgres.container
+[Container]
+AutoUpdate=registry
+ContainerName=plausible_postgres
+EnvironmentFile=settings.env
+Image=docker.io/postgres:14-alpine
+Network=db.network
+PublishPort=5433:5432
+Volume=./db/:/var/lib/postgresql/data:Z
+Volume=./backup/:/mnt/backup:Z
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

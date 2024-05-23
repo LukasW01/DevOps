@@ -1,0 +1,15 @@
+# dendrite_postgres.container
+[Container]
+AutoUpdate=registry
+ContainerName=dendrite_postgres
+EnvironmentFile=/mnt/container/dendrite/settings.env
+Image=docker.io/postgres:16-alpine
+Network=db.network
+PublishPort=5432:5432
+Volume=/mnt/container/dendrite/db/:/var/lib/postgresql/data:Z
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

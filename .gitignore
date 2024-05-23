@@ -1,0 +1,11 @@
+.DS_Store
+
+#ide
+.idea/
+.vscode/
+.fleet/
+
+# Ansible
+vault.txt
+become.txt
+ssh/

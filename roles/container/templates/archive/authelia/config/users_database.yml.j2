@@ -1,0 +1,16 @@
+###############################################################
+#                         Users Database                      #
+###############################################################
+
+# This file can be used if you do not have an LDAP set up.
+
+users:
+  lukas:
+    disabled: false
+    displayname: "Lukas Wigger"
+    password: "$argon2id$v=19$m=65536,t=3,p=4$EORj5YMzl+D9tfPhglvfyw$6N57sKJD5HIVaIISrYUI+wEXVy/7YjeXoU3Rn4MywnI"
+    email: {{ mail }}
+    groups:
+      - admins
+      - dev
+

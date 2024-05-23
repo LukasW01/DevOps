@@ -1,0 +1,15 @@
+# plausible.container
+[Container]
+AutoUpdate=registry
+EnvironmentFile=settings.env
+Exec=sh -c 'sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db migrate && /entrypoint.sh run'
+Image=docker.io/plausible/analytics:latest
+Network=app.network
+Network=web.network
+Network=db.network
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,41 @@
+# OS
+timezone: Europe/Amsterdam
+locale: en_US.UTF-8
+user: luki
+group: luki
+local: ip.srv
+
+# NTP
+ntp_enabled: true
+ntp_timezone: Europe/Helsinki
+ntp_manage_config: true
+ntp_tinker_panic: true
+
+# NTP server area configuration (leave empty for 'Worldwide').
+# See: http://support.ntp.org/bin/view/Servers/NTPPoolServers
+ntp_area: ''
+ntp_servers:
+  - "time.cloudflare.com iburst"
+  - "time.google.com iburst"
+
+ntp_restrict:
+  - "127.0.0.1"
+  - "::1"
+
+# Security
+security_ssh_port: 22
+security_autoupdate_enabled: true
+security_sshd_state: started
+security_ssh_restart_handler_state: restarted
+security_fail2ban_enabled: true
+
+security_ssh_password_authentication: "no"
+security_ssh_permit_root_login: "no"
+security_ssh_usedns: "no"
+security_ssh_permit_empty_password: "no"
+security_ssh_challenge_response_auth: "no"
+security_ssh_gss_api_authentication: "no"
+security_ssh_x11_forwarding: "no"
+
+security_sudoers_passworded:
+  - luki

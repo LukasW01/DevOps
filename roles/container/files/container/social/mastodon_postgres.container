@@ -1,0 +1,15 @@
+# mastodon_postgres.container
+[Container]
+AutoUpdate=registry
+ContainerName=mastodon_postgres
+EnvironmentFile=/mnt/container/mastodon/settings.env
+Image=docker.io/postgres:16-alpine
+Network=db.network
+PublishPort=5433:5432
+Volume=/mnt/container/mastodon/db/:/var/lib/postgresql/data:Z
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

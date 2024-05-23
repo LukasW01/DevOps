@@ -1,0 +1,69 @@
+{
+  # for more info about the config, check out the documentation
+  # https://join-lemmy.org/docs/en/administration/configuration.html
+  # This is a minimal lemmy config for the dev / main branch. Do not use for a
+  # release / stable version.
+  # settings related to the postgresql database
+  database: {
+    # Username to connect to postgres
+    user: "lemmy"
+    # Password to connect to postgres
+    password: "{{ postgres_pw }}"
+    # Host where postgres is running
+    host: "lemmy_postgres"
+    # Port where postgres can be accessed
+    port: 5432
+    # Name of the postgres database for lemmy
+    database: "lemmy"
+    # Maximum number of active sql connections
+    pool_size: 5
+  }
+  # Settings related to activitypub federation
+  # Pictrs image server configuration.
+  pictrs: {
+    # Address where pictrs is available (for image hosting)
+    url: "http://lemmy_pictrs:8080/"
+    # Set a custom pictrs API key. ( Required for deleting images )
+    api_key: "{{ lemmy_pictrs }}"
+  }
+  # Email sending configuration. All options except login/password are mandatory
+  email: {
+    # Hostname and port of the smtp server
+    smtp_server: "{{ smtp_host }}:465"
+    # Login name for smtp server
+    smtp_login: "{{ smtp_user }}"
+    # Password to login to the smtp server
+    smtp_password: "{{ smtp_password }}"
+    # Address to send emails from, eg "noreply@your-instance.com"
+    smtp_from_address: "News (Lemmy) <{{ smtp_user }}>"
+    # Whether or not smtp connections should use tls. Can be none, tls, or starttls
+    tls_type: "tls"
+  }
+  prometheus: {
+    bind: "0.0.0.0"
+    port: 10002
+  }
+  # Parameters for automatic configuration of new instance (only used at first start)
+  setup: {
+    # Username for the admin user
+    admin_username: "lukas"
+    # Password for the admin user. It must be at least 10 characters.
+    admin_password: "{{ lemmy_pw }}"
+    # Name of the site (can be changed later)
+    site_name: "News (Lemmy)"
+    # Email for the admin user (optional, can be omitted and set later through the website)
+    admin_email: "lukas@wigger.one"
+  }
+  # the domain name of your instance (mandatory)
+  hostname: "news.wigger.one"
+  # Address where lemmy should listen for incoming requests
+  bind: "0.0.0.0"
+  # Port where lemmy should listen for incoming requests
+  port: 8536
+  # Whether the site is available over TLS. Needs to be true for federation to work.
+  tls_enabled: true
+  # The number of activitypub federation workers that can be in-flight concurrently
+  worker_count: 0
+  # The number of activitypub federation retry workers that can be in-flight concurrently
+  retry_count: 0
+}

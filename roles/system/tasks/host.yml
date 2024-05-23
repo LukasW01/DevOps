@@ -1,0 +1,13 @@
+---
+- name: Add the local IP as a domain to /etc/hosts
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    line: "{{ hostvars[inventory_hostname]['private_ip'] }} ip.srv"
+    state: present
+
+- name: Test if the domain is pingable on the server
+  ansible.builtin.wait_for:
+    host: ip.srv
+    port: 22
+    state: started
+  register: ping_result

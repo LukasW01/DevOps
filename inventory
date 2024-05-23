@@ -1,0 +1,27 @@
+[all:children]
+
+[all:vars]
+ansible_user=luki
+ansible_port=22
+ansible_ssh_private_key_file=ssh/ec_key.pub
+
+[bitwarden] # fragile
+65.108.208.188
+
+[bitwarden:vars]
+private_ip="10.6.0.2"
+container="bitwarden"
+
+[social] # maverick (mastodon, lemmy, dendrite)
+135.181.43.142
+
+[social:vars]
+private_ip="10.4.0.2"
+container="social"
+
+[web] #nimona
+5.161.108.129
+
+[web:vars]
+private_ip="10.5.0.2"
+container="web"

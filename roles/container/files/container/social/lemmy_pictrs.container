@@ -1,0 +1,15 @@
+# lemmy_pictrs.container
+[Container]
+AutoUpdate=registry
+ContainerName=lemmy_pictrs
+EnvironmentFile=/mnt/container/lemmy/settings.env
+Image=docker.io/asonix/pictrs:latest
+Network=app.network
+Network=web.network
+Volume=/mnt/container/lemmy/pictrs:/mnt:Z
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,9 @@
+---
+- name: Start podman 
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - podman
+    - podman-auto-update

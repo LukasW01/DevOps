@@ -1,0 +1,61 @@
+- name: Verify
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Check SELinux is in permissive mode
+      ansible.builtin.command: getenforce
+      register: selinux_mode
+      changed_when: false
+      check_mode: no
+      failed_when: selinux_mode.stdout != "Permissive"
+
+    - name: Verify SELinux policy is targeted
+      ansible.builtin.command: sestatus
+      register: selinux_status
+      changed_when: false
+      check_mode: no
+      failed_when: >
+        "SELinux status:                 enabled" not in selinux_status.stdout or
+        "Current mode:                   permissive" not in selinux_status.stdout or
+        "Mode from config file:          permissive" not in selinux_status.stdout or
+        "Policy from config file:        targeted" not in selinux_status.stdout
+
+    - name: Verify SELinux port contexts
+      ansible.builtin.command: semanage port -l
+      register: selinux_ports
+      changed_when: false
+      check_mode: no
+      failed_when: >
+        "ssh_port_t tcp 22" not in selinux_ports.stdout or
+        "http_port_t tcp 80" not in selinux_ports.stdout or
+        "http_port_t tcp 443" not in selinux_ports.stdout or
+        "postgresql_port_t tcp 5432" not in selinux_ports.stdout or
+        "redis_port_t tcp 6379" not in selinux_ports.stdout
+
+    - name: Verify SELinux file context for /mnt/*
+      ansible.builtin.command: semanage fcontext -l
+      register: selinux_fcontext
+      changed_when: false
+      check_mode: no
+      failed_when: >
+        "/mnt(/.*)?.*container_file_t.*s0" not in selinux_fcontext.stdout
+    
+    - name: Verify firewalld is stopped
+      ansible.builtin.systemd:
+        name: firewalld
+        state: stopped
+      register: firewalld_status
+      changed_when: false
+      check_mode: no
+      failed_when: >
+        firewalld_status.status.ActiveState != "inactive"
+
+    - name: Verify firewalld is disabled
+      ansible.builtin.systemd:
+        name: firewalld
+        enabled: no
+      register: firewalld_enabled
+      changed_when: false
+      check_mode: no
+      failed_when: >
+        firewalld_enabled.status.Enabled != "disabled"

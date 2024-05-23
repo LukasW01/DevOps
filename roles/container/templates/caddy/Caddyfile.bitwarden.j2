@@ -1,0 +1,158 @@
+# Import
+(header) {
+	header {
+		Permissions-Policy "interest-cohort=()"
+		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "SAMEORIGIN"
+		X-XSS-Protection "1; mode=block"
+		Referrer-Policy "same-origin"
+		Content-Security-Policy "upgrade-insecure-requests; frame-ancestors 'self'"
+	}
+}
+
+(ipfilter) {
+        @ban {
+           not remote_ip 123.123.123.123
+           path *
+        }
+        redir @ban https://wigger.one/ban/
+}
+
+(logs) {
+        log {
+                output file /var/log/access.log {
+                        roll_size 1gb
+                        roll_keep 5
+                        roll_keep_for 720h
+                }
+        }
+}
+
+(git) {
+	respond /.git/* "Access denied" 403 {
+                close
+        }
+}
+
+(request_body) {
+        request_body {
+                max_size 15MB
+        }
+}
+
+(handle_errors_404) {
+        handle_errors {
+                @404 expression {err.status_code} == 404
+                handle @404 {
+                                rewrite * /404.html
+                                file_server
+                }
+        }
+}
+
+(handle_errors_index) {
+        handle_errors {
+                @404 expression {err.status_code} == 404
+                handle @404 {
+                                rewrite * /index.html
+                                file_server
+                }
+        }
+}
+
+{
+    #CDN-ACME
+    acme_dns cloudflare {{ cloudflare_api }}
+    #Debug-Mode
+    #debug
+    #Metrics
+    servers {
+        metrics
+    }
+}
+
+#Host
+fragile.wigger.cloud {
+	redir https://wigger.cloud
+}
+
+#Service
+vault.wigger.one {
+#   root * /usr/share/www/web-bitwarden/build/
+#   file_server
+
+	reverse_proxy https://web-bitwarden.pages.dev {
+		header_up Host {http.reverse_proxy.upstream.host}
+		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+	}
+
+	# API
+	reverse_proxy /admin* bitwarden_app:8080 {
+		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+	}
+
+	reverse_proxy /api/* bitwarden_app:8080 {
+		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+	}
+
+	reverse_proxy /events/* bitwarden_app:8080 {
+		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+	}
+
+	reverse_proxy /identity/* bitwarden_app:8080 {
+		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+	}
+
+	reverse_proxy /notifications/* bitwarden_app:8080 {
+		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+	}
+
+	reverse_proxy /scim/* bitwarden_app:8080 {
+		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+	}
+
+	reverse_proxy /sso/* bitwarden_app:8080 {
+		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+	}
+
+	encode gzip
+
+	import handle_errors_404
+	import header
+	import logs
+	import git
+}
+
+#Backend
+kopia-fragile.wigger.cloud {
+	reverse_proxy ip.srv:4001
+	encode gzip
+
+	import header
+	import logs
+}
+
+caddy-fragile.wigger.cloud {
+	metrics
+	encode gzip
+
+	import header
+	import logs
+}
+
+node-fragile.wigger.cloud {
+	reverse_proxy ip.srv:4000
+	encode gzip
+
+	import header
+	import logs
+}

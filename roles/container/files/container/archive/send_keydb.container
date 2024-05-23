@@ -1,0 +1,16 @@
+# send_keydb.container
+[Container]
+AutoUpdate=registry
+ContainerName=send_keydb
+EnvironmentFile=settings.env
+Exec=sh -c 'keydb-server --rename-command FLUSHDB "" --rename-command FLUSHALL "" && keydb-cli --rdb /data/backup.rdb'
+Image=docker.io/eqalpha/keydb:alpine
+Network=db.network
+PublishPort=6379:6379
+Volume=./keydb/:/data:Z
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

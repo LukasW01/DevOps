@@ -1,0 +1,11 @@
+---
+- name: Install Dependencies for OS
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - btop
+    - zip
+    - unzip
+    - podman
+  notify: Start podman

@@ -1,0 +1,17 @@
+- name: Verify
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Check if btop is installed
+      ansible.builtin.package:
+        name: btop
+        state: present
+      register: btop
+      failed_when: btop is failed
+
+    - name: Check if podman is installed
+      ansible.builtin.package:
+        name: podman
+        state: present
+      register: podman
+      failed_when: podman is failed

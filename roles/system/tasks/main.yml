@@ -1,0 +1,9 @@
+---
+- name: Include user
+  ansible.builtin.include_tasks: user.yml
+
+- name: Include host
+  ansible.builtin.include_tasks: host.yml
+
+- name: Include posix
+  ansible.builtin.include_tasks: posix.yml

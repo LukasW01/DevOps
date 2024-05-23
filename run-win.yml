@@ -1,0 +1,7 @@
+---
+- name: Main playbook
+  hosts: all
+  become: true
+  
+  roles:
+    - role: apps

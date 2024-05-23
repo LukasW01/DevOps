@@ -1,0 +1,31 @@
+---
+- name: Add a SUDO user (redhat)
+  ansible.builtin.user:
+    name: "{{ user }}"
+    shell: /bin/bash
+    password: "{{ password | password_hash('sha512', '7n7XzaPpV3bMvpFJ') }}"
+    groups: wheel
+    createhome: true
+    home: "/home/{{ user }}"
+    state: present
+  when: ansible_os_family == "RedHat"
+
+- name: Add a SUDO user (debian)
+  ansible.builtin.user:
+    name: "{{ user }}"
+    shell: /bin/bash
+    password: "{{ password | password_hash('sha512', '7n7XzaPpV3bMvpFJ') }}"
+    groups: sudo
+    createhome: true
+    home: "/home/{{ user }}"
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Add ssh key to remote host
+  ansible.posix.authorized_key:
+    user: "{{ user }}"
+    state: present
+    key: "{{ lookup('file', '{{ item }}') }}"
+    path: /home/{{ user }}/.ssh/authorized_keys
+  loop:
+    - 'ssh/ec_key.pub'

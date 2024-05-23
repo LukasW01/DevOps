@@ -1,0 +1,20 @@
+# authelia.container
+[Container]
+AutoUpdate=registry
+Environment=TZ=Europe/Amsterdam
+Group=1000
+Image=ghcr.io/authelia/authelia:latest
+Network=app.network
+Network=web.network
+PublishPort=9091:9091
+User=1000
+Volume=./db:/var/lib/authelia:Z
+Volume=./logs:/var/log/authelia:Z
+Volume=./config:/config:Z
+Volume=./assets:/var/lib/authelia/assets:Z
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,39 @@
+name: Ansible
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: "30 7 * * 3"
+jobs:
+  lint:
+      name: Ansible Lint 
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+        - name: Run ansible-lint
+          uses: ansible/ansible-lint@v6
+
+  molecule:
+    name: Ansible Molecule
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        scenario:
+          - apps
+          - container
+          - security
+          - system
+    steps:
+      - uses: actions/checkout@v4
+      - name: Molecule
+        uses: gofrolist/molecule-action@v2
+        with:
+          molecule_options: --debug --base-config molecule/_shared/base.yml
+          molecule_command: test
+          molecule_args: --scenario-name ${{ matrix.scenario }}
+        env:
+          ANSIBLE_FORCE_COLOR: '1'

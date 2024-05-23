@@ -1,0 +1,25 @@
+---
+- name: Install Dependencies for OS
+  chocolatey.chocolatey.win_chocolatey:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - office365proplus
+    - microsoft-teams.install
+    - vscode
+    - firefox
+    - ungoogled-chromium
+    - thunderbird
+    - minecraft-launcher
+    - steam
+    - goggalaxy
+    - epicgameslauncher
+    - battle-net
+    - ubisoft-connect
+    - ea-app
+    - rockstar-launcher
+    - wargaming-game-center
+    - discord
+    - amd-ryzen-master
+    - amd-radeon-adrenalin
+  

@@ -1,0 +1,18 @@
+# lemmy_app.container
+[Container]
+AutoUpdate=registry
+ContainerName=lemmy_app
+EnvironmentFile=/mnt/container/lemmy/settings.env
+Image=docker.io/dessalines/lemmy:0.19.3
+LogDriver=json-file
+Network=app.network
+Network=web.network
+Network=db.network
+PodmanArgs=--log-opt 'max-size=50m' --log-opt 'max-file=4'
+Volume=/mnt/container/lemmy/config:/config/:Z
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

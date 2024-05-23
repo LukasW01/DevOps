@@ -1,0 +1,8 @@
+---
+- name: Include dnf
+  ansible.builtin.include_tasks: package.yml
+  when: ansible_os_family == 'RedHat' or ansible_os_family == 'Debian'
+
+- name: Include choco
+  ansible.builtin.include_tasks: choco.yml
+  when: ansible_os_family == 'Windows'
