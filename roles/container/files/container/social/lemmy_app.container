@@ -3,7 +3,7 @@
 AutoUpdate=registry
 ContainerName=lemmy_app
 EnvironmentFile=/mnt/container/lemmy/settings.env
-Image=docker.io/dessalines/lemmy:0.19.4
+Image=docker.io/dessalines/lemmy:0.19.5
 LogDriver=json-file
 Network=app.network
 Network=web.network
