@@ -61,6 +61,7 @@
 	}
 }
 
+# Globals
 {
     #CDN-ACME
     acme_dns cloudflare {{ cloudflare_api }}
@@ -74,28 +75,43 @@
     order webdav before file_server
 }
 
-#Host
+# Host
 nimona.wigger.cloud {
 	redir https://wigger.cloud
 }
 
-#Services
+# Services
+cdn.kell3r.ch, cdn.braendli.dev, cdn.de-wit.dev, cdn.wigger.one {
+	root * /usr/share/www/web-one/
+	file_server {
+		hide .git
+		browse
+	}
+
+	encode gzip
+
+	import handle_errors_404
+	import header
+	import logs
+	import git
+}
+
 api.wigger.dev {
-		handle {
-			respond /* `{"http": "418 - I'm a teapot"}` 418
-		}
+	handle {
+		respond /* `{"http": "418 - I'm a teapot"}` 418
+	}
 
-       handle_path /data/* {
-                root * /usr/share/www/web-api/
-                file_server
-       }
+	handle_path /data/* {
+		root * /usr/share/www/web-api/
+		file_server
+	}
 
-       encode gzip
+	encode gzip
 
-       import handle_errors_404
-       import header
-       import logs
-       import git
+	import handle_errors_404
+	import header
+	import logs
+	import git
 }
 
 webdav.wigger.dev {
@@ -105,16 +121,16 @@ webdav.wigger.dev {
 
 	@dav path /dav/*
 	handle @dav {
-	        @notget not method GET
-	        route @notget {
-	                basic_auth {
-	                        git $2a$14$rQ7TeAs/b.r8Kf6Lhnscg.MtmO0sxfcSOj2MzkWBXjRu7oJPuVWZu
-	                }
-	                webdav /dav/* {
-	                        root /usr/share/
-	                        prefix /dav
-	                }
-	       }
+		@notget not method GET
+		route @notget {
+			basic_auth {
+					git $2a$14$rQ7TeAs/b.r8Kf6Lhnscg.MtmO0sxfcSOj2MzkWBXjRu7oJPuVWZu
+			}
+			webdav /dav/* {
+					root /usr/share/
+					prefix /dav
+			}
+		}
 	}
 
 	encode gzip
@@ -172,7 +188,7 @@ kell3r.ch {
 }
 
 braendli.dev {
-	root * /usr/share/www/web-jessica/
+	root * /usr/share/www/web-florin/
 	file_server
 
 	encode gzip
@@ -195,7 +211,7 @@ de-wit.dev {
 	import git
 }
  
-#Backend
+# Backend
 kopia-nimona.wigger.cloud {
 	reverse_proxy ip.srv:4001
 	encode gzip
