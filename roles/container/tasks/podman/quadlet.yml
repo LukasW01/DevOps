@@ -1,9 +1,12 @@
 ---
 - name: Create systemd directory for quadlet
   ansible.builtin.file:
-    path: "/home/{{ user }}/.config/containers/systemd"
+    path: "{{ item }}"
     state: directory
     mode: 0755
+  loop:
+    - "/home/{{ user }}/.config/containers/systemd"
+    - "/etc/containers/systemd"
 
 - name: Copy rootless systemd files for quadlet (network, volume, image, container)
   ansible.builtin.copy:
@@ -12,12 +15,9 @@
     directory_mode: yes
     mode: 0755
   loop:
-    - "image/"
-    - "network/"
-    - "volume/"
-    - "container/backend/rootless"
-    - "container/web/"
-    - "container/{{ hostvars[inventory_hostname]['container'] }}/"
+    - "network/rootless/"
+    #- "volume/rootless/"
+    - "container/backend/rootless/"
 
 - name: Copy rootfull systemd files for quadlet (network, volume, image, container)
   ansible.builtin.copy:
@@ -26,7 +26,16 @@
     directory_mode: yes
     mode: 0755
   loop:
-    - "image/"
-    - "network/"
-    - "volume/"
-    - "container/backend/rootfull"
+    - "network/rootfull/"
+    #- "volume/rootfull/"
+    - "container/backend/rootfull/"
+    
+# Important: Quadlet expects this to be owned by the user, or else it will fail to start the containers
+- name: Change ownership for config folder
+  ansible.builtin.file:
+    path: "/home/{{ user }}/.config/"
+    state: directory
+    mode: "0775"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: true

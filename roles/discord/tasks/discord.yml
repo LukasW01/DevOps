@@ -1,0 +1,10 @@
+- name: Set up discord bots
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - src: container/doplarr.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/doplarr.container"
+    - src: container/quadratauge.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/quadratauge.container"

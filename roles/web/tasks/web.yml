@@ -1,0 +1,32 @@
+- name: Create /mnt/caddy directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0775"
+  loop:
+    - "/mnt/caddy/data"
+    - "/mnt/caddy/config"
+    - "/mnt/caddy/logs"
+    - "/mnt/caddy/www"
+
+- name: Change ownership for cadddy folder
+  ansible.builtin.file:
+    path: "/mnt/caddy"
+    state: directory
+    mode: "0775"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: true
+
+- name: Set up WEB server
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - src: container/caddy.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/caddy.container"
+    - src: container/cloudflared.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/cloudflared.container"
+    - src: "caddy/Caddyfile.{{ hostvars[inventory_hostname]['region'] }}.j2"
+      dest: "/mnt/caddy/Caddyfile"

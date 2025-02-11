@@ -1,0 +1,7 @@
+# container.volume
+[Volume]
+Device=//nas.local/container
+Group=1000
+Options=username=container,password={{ smb_password }},iocharset=utf8
+Type=cifs
+User=1000

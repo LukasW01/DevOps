@@ -4,6 +4,7 @@
     name: "{{ item }}"
     state: present
   loop:
+    - epel-release
     - btop
     - zip
     - unzip

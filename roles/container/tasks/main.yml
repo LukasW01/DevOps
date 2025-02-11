@@ -4,17 +4,3 @@
 
 - name: Include podman/quadlet
   ansible.builtin.include_tasks: podman/quadlet.yml
-
-- name: Include env/web
-  ansible.builtin.include_tasks: env/web.yml
-
-- name: Include env/backend
-  ansible.builtin.include_tasks: env/backend.yml
-
-- name: Include env/social
-  ansible.builtin.include_tasks: env/social.yml
-  when: "'social' in group_names"
-
-- name: Include env/bitwarden
-  ansible.builtin.include_tasks: env/bitwarden.yml
-  when: "'bitwarden' in group_names"

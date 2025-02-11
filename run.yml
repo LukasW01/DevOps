@@ -4,9 +4,10 @@
   become: true
   
   roles:
+    - role: apps
     - role: geerlingguy.security
     - role: geerlingguy.ntp
-    - role: apps
     - role: system
     - role: security
     - role: container
+    

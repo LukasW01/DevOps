@@ -1,0 +1,3 @@
+---
+- name: Include iommu
+  ansible.builtin.include_tasks: iommu.yml

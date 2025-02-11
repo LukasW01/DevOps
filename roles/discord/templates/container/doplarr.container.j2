@@ -1,0 +1,13 @@
+# doplarr.container
+[Container]
+AutoUpdate=registry
+ContainerName=doplarr
+Image=ghcr.io/kiranshila/doplarr:latest
+Network=app.network
+Environment=DISCORD__MAX_RESULTS=25 DISCORD__REQUESTED_MSG_STYLE=:embed LOG_LEVEL=:info PARTIAL_SEASONS=true OVERSEERR__DEFAULT_ID=5 DISCORD__TOKEN={{ discord_token_request }} OVERSEERR__URL=http://plex:5055 OVERSEERR__API={{ overseerr_api }}
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

@@ -21,6 +21,18 @@
     state: present
   when: ansible_os_family == "Debian"
 
+- name: Update root password (redhat)
+  ansible.builtin.user:
+    name: root
+    password: "{{ password | password_hash('sha512', '7n7XzaPpV3bMvpFJ') }}"
+  when: ansible_os_family == "RedHat"
+  
+- name: Update root password
+  ansible.builtin.user:
+      name: root
+      password: "{{ password | password_hash('sha512', '7n7XzaPpV3bMvpFJ') }}"
+  when: ansible_os_family == "Debian"
+
 - name: Add ssh key to remote host
   ansible.posix.authorized_key:
     user: "{{ user }}"
@@ -29,3 +41,7 @@
     path: /home/{{ user }}/.ssh/authorized_keys
   loop:
     - 'ssh/ec_key.pub'
+
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: "{{ hostvars[inventory_hostname]['hostname'] }}"

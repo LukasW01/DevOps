@@ -7,7 +7,7 @@ local: ip.srv
 
 # NTP
 ntp_enabled: true
-ntp_timezone: Europe/Helsinki
+ntp_timezone: Europe/Amsterdam
 ntp_manage_config: true
 ntp_tinker_panic: true
 

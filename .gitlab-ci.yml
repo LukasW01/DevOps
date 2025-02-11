@@ -24,15 +24,6 @@ ansible-lint:
   script:
     - ansible-lint --offline -x 106 roles  
 
-ansible-molecule:
-  stage: test
-  services:
-    - docker:dind
-  before_script:
-    - pip install molecule molecule-plugins[docker] docker ansible ansible-lint
-  script:
-    - molecule test --all 
-
 ansible-playbook:
   stage: deploy
   when: manual

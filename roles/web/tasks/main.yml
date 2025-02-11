@@ -1,0 +1,2 @@
+- name: Include web
+  ansible.builtin.include_tasks: web.yml
