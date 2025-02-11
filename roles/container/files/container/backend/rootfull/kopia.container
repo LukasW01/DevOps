@@ -1,20 +1,21 @@
 # kopia.container
 [Container]
-AddCapability=SYS_ADMIN
-AddDevice=/dev/fuse:/dev/fuse:rwm
 AutoUpdate=registry
-EnvironmentFile=/mnt/container/backend/kopia/settings.env
-Exec=server start '--address=0.0.0.0:51515' '--server-username=root' '--server-password=root' --insecure
-Group=0
+ContainerName=kopia
 Image=ghcr.io/lukasw01/kopia-shoutrrr:latest
+Exec=server start '--address=0.0.0.0:51515' '--server-username=root' '--server-password=root' --insecure
+EnvironmentFile=/mnt/container/backend/kopia/settings.env
+PublishPort=4001:51515
 Network=backend.network
-PodmanArgs=--privileged --security-opt apparmor=unconfined
-User=0
 Volume=/mnt/container/backend/kopia/config:/app/config
 Volume=/mnt/container/backend/kopia/cache:/app/cache
 Volume=/mnt/container/backend/kopia/logs:/app/logs
 Volume=/mnt/:/mnt/:ro
-PublishPort=4001:51515
+User=0
+Group=0
+AddCapability=SYS_ADMIN
+AddDevice=/dev/fuse:/dev/fuse:rwm
+PodmanArgs=--privileged
 
 [Service]
 Restart=always

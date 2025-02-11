@@ -1,5 +1,5 @@
 ---
-- name: Start podman 
+- name: Start services 
   ansible.builtin.service:
     name: "{{ item }}"
     state: started
@@ -7,3 +7,4 @@
   loop:
     - podman
     - podman-auto-update
+    - qemu-guest-agent

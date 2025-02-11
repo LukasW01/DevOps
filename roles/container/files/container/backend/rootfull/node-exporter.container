@@ -1,6 +1,7 @@
-# app.container
+# node-exporter.container
 [Container]
 AutoUpdate=registry
+ContainerName=node-exporter
 Image=quay.io/prometheus/node-exporter:latest
 Exec='--path.procfs=/host/proc' '--path.sysfs=/host/sys' '--path.rootfs=/rootfs'
 Label=prometheus-job=node-exporter prometheus-port=9100 prometheus-path=/metrics

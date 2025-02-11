@@ -1,0 +1,29 @@
+- name: Create Minecraft directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0775"
+  loop:
+    - "/mnt/container/minecraft/data"
+
+- name: Change ownership for Minecraft folder
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0775"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: true
+  loop:
+    - "/mnt/container/minecraft/"
+
+- name: Set up Minecraft server
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - src: container/minecraft.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/minecraft.container"
+    - src: env/settings.env.j2
+      dest: "/mnt/container/minecraft/settings.env"

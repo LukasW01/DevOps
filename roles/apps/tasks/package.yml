@@ -9,4 +9,5 @@
     - zip
     - unzip
     - podman
-  notify: Start podman
+    - qemu-guest-agent
+  notify: Start services
