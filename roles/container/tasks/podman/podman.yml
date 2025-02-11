@@ -5,20 +5,14 @@
   changed_when: false
   when: user is defined
 
-- name: Create /mnt/container directories
+- name: Create /mnt/container directories & set permissions
   ansible.builtin.file:
     path: "{{ item }}"
-    state: directory
-    mode: "0775"
-  loop:
-    - "/mnt/container"
-    - "/mnt/container/backend"
-
-- name: Change ownership for mnt folder
-  ansible.builtin.file:
-    path: "/mnt/"
     state: directory
     mode: "0775"
     owner: "{{ user }}"
     group: "{{ group }}"
     recurse: true
+  loop:
+    - "/mnt/container"
+    - "/mnt/container/backend"

@@ -1,22 +1,16 @@
-- name: Create /mnt/caddy directories
+- name: Create /mnt/caddy directories & set permissions
   ansible.builtin.file:
     path: "{{ item }}"
-    state: directory
-    mode: "0775"
-  loop:
-    - "/mnt/caddy/data"
-    - "/mnt/caddy/config"
-    - "/mnt/caddy/logs"
-    - "/mnt/caddy/www"
-
-- name: Change ownership for caddy folder
-  ansible.builtin.file:
-    path: "/mnt/caddy"
     state: directory
     mode: "0775"
     owner: "{{ user }}"
     group: "{{ group }}"
     recurse: true
+  loop:
+    - "/mnt/caddy/data"
+    - "/mnt/caddy/config"
+    - "/mnt/caddy/logs"
+    - "/mnt/caddy/www"
 
 - name: Set up WEB server
   ansible.builtin.template:
