@@ -9,7 +9,7 @@
     - "/mnt/caddy/logs"
     - "/mnt/caddy/www"
 
-- name: Change ownership for cadddy folder
+- name: Change ownership for caddy folder
   ansible.builtin.file:
     path: "/mnt/caddy"
     state: directory

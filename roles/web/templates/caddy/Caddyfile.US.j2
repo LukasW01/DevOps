@@ -71,7 +71,7 @@
     servers {
         metrics
     }
-	#WebDAV
+    #WebDAV
     order webdav before file_server
 }
 
@@ -82,11 +82,11 @@ nimona.wigger.cloud {
 
 # Services
 cdn.kell3r.ch, cdn.braendli.dev, cdn.de-wit.dev, cdn.wigger.one {
-	root * /usr/share/www/web-one/
-	file_server {
-		hide .git
-		browse
-	}
+    root * /usr/share/www/web-one/
+    file_server {
+        hide .git
+        browse
+    }
 
     header {
         Access-Control-Allow-Origin *
@@ -98,7 +98,7 @@ cdn.kell3r.ch, cdn.braendli.dev, cdn.de-wit.dev, cdn.wigger.one {
     import git
 }
 
-api.wigger.dev, api.wigger.one {
+api.wigger.one {
     handle {
         respond /* `{"http": "418 - I'm a teapot"}` 418
     }
@@ -135,20 +135,16 @@ api.wigger.dev, api.wigger.one {
 }
 
 webdav.wigger.one {
-	handle {
-		respond /* `{"http": "418 - I'm a teapot"}` 418
-	}
-
-	@dav path /api/*
+	@dav path /*
 	handle @dav {
 		@notget not method GET
 		route @notget {
 			basic_auth {
 					git $2a$14$rQ7TeAs/b.r8Kf6Lhnscg.MtmO0sxfcSOj2MzkWBXjRu7oJPuVWZu
 			}
-			webdav /api/* {
+			webdav /* {
 					root /usr/share/
-					prefix /api
+					prefix /
 			}
 		}
 	}

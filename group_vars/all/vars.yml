@@ -3,7 +3,7 @@ timezone: Europe/Amsterdam
 locale: en_US.UTF-8
 user: luki
 group: luki
-local: ip.srv
+localhost: ip.srv
 
 # NTP
 ntp_enabled: true

@@ -1,22 +1,16 @@
 ---
 - name: Create /mnt/container/backend directories
   ansible.builtin.file:
-    path: "{{ item.path }}"
+    path: "{{ item }}"
     state: directory
-    mode: "{{ item.mode }}"
+    mode: "0775"
   loop:
-    - path: "/mnt/container/backend/kopia/config"
-      mode: "0775"
-    - path: "/mnt/container/backend/kopia/logs"
-      mode: "0775"
-    - path: "/mnt/container/backend/kopia/cache"
-      mode: "0775"
-    - path: "/mnt/container/backend/pg_brm/backup"
-      mode: "0777"
-    - path: "/mnt/container/backend/pg_brm/log"
-      mode: "0777"
-    - path: "/mnt/container/backend/node_exporter"
-      mode: "0775"
+    - "/mnt/container/backend/kopia/config"
+    - "/mnt/container/backend/kopia/logs"
+    - "/mnt/container/backend/kopia/cache"
+    - "/mnt/container/backend/pg_brm/backup"
+    - "/mnt/container/backend/pg_brm/log"
+    - "/mnt/container/backend/node_exporter"
 
 - name: Set up backend environment variables
   ansible.builtin.template:
