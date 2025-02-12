@@ -1,0 +1,27 @@
+# Info: YouTrack container runs with UID 13001 and GID 13001
+# For RWX permissions, the permissions are 0777
+# 
+# Docs: https://www.jetbrains.com/help/youtrack/server/youtrack-docker-installation.html#create-and-configure-directories
+- name: Create YouTrack directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0777"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: true
+  loop:
+    - "/mnt/container/youtrack/data"
+    - "/mnt/container/youtrack/conf"
+    - "/mnt/container/youtrack/logs"
+    - "/mnt/container/youtrack/backups"
+    - "/mnt/container/youtrack/temp"
+
+- name: Set up YouTrack server
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - src: container/youtrack.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/youtrack.container"

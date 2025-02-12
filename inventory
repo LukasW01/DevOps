@@ -8,21 +8,24 @@ ansible_port=22
 
 #[discord]
 #192.168.0.79
-
 #[discord:vars]
 #hostname="discord"
 #region="CH"
 
 #[web]
 #192.168.0.216
-
 #[web:vars]
 #hostname="web"
 #region="CH"
 
 #[minecraft]
 #192.168.0.169
-
 #[minecraft:vars]
 #hostname="minecraft"
+#region="CH"
+
+#[cooper]
+#192.168.0.87
+#[cooper:vars]
+#hostname="cooper"
 #region="CH"

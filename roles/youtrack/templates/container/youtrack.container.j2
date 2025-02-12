@@ -1,0 +1,18 @@
+# youtrack.container
+[Container]
+AutoUpdate=registry
+ContainerName=youtrack
+Image=docker.io/jetbrains/youtrack:2024.3.57595
+Network=app.network
+PublishPort=8080:8080
+Volume=/mnt/container/youtrack/data/:/opt/youtrack/data:Z
+Volume=/mnt/container/youtrack/logs/:/opt/youtrack/logs:Z
+Volume=/mnt/container/youtrack/conf/:/opt/youtrack/conf:Z
+Volume=/mnt/container/youtrack/backups/:/opt/youtrack/backups:Z
+Volume=/mnt/container/youtrack/temp/:/opt/youtrack/temp:Z
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
