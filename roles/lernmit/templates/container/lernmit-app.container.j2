@@ -1,0 +1,15 @@
+# lernmit-app.container
+[Container]
+AutoUpdate=registry
+ContainerName=lernmit_app
+Image=ghcr.io/lukasw01/lernmit:latest
+Network=app.network
+Network=db.network
+PublishPort=4040:4000
+EnvironmentFile=/mnt/container/lernmit/settings.env
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

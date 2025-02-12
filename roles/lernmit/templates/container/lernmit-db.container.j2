@@ -1,0 +1,15 @@
+# lernmit-db.container
+[Container]
+AutoUpdate=registry
+ContainerName=lernmit_postgres
+Image=docker.io/postgres:16-alpine
+Network=db.network
+PublishPort=5432:5432
+Volume=/mnt/container/lernmit/db/:/var/lib/postgresql/data:Z
+EnvironmentFile=/mnt/container/lernmit/settings.env
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
