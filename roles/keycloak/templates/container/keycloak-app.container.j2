@@ -1,0 +1,17 @@
+# keycloak-app.container
+[Container]
+AutoUpdate=registry
+ContainerName=keycloak_app
+Image=quay.io/keycloak/keycloak:latest
+Exec=start-dev
+Network=app.network
+Network=db.network
+PublishPort=8080:8080
+Volume=/mnt/container/keycloak/themes/:/opt/keycloak/themes/
+EnvironmentFile=/mnt/container/keycloak/settings.env
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

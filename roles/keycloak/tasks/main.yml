@@ -1,0 +1,2 @@
+- name: Include keycloak
+  ansible.builtin.include_tasks: keycloak.yml

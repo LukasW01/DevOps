@@ -1,0 +1,24 @@
+- name: Create Keycloak directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0775"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: true
+  loop:
+    - "/mnt/container/keycloak/db"
+    - "/mnt/container/keycloak/themes"
+
+- name: Set up Keycloak
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - src: container/keycloak-app.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/keycloak-app.container"
+    - src: container/keycloak-db.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/keycloak-db.container"
+    - src: env/settings.env.j2
+      dest: "/mnt/container/keycloak/settings.env"

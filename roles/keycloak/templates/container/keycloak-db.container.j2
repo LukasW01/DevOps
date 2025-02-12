@@ -1,0 +1,15 @@
+# keycloak-db.container
+[Container]
+AutoUpdate=registry
+ContainerName=keycloak_postgres
+Image=docker.io/postgres:16-alpine
+Network=db.network
+PublishPort=5432:5432
+Volume=/mnt/container/keycloak/db/:/var/lib/postgresql/data:Z
+EnvironmentFile=/mnt/container/keycloak/settings.env
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

@@ -4,6 +4,7 @@ locale: en_US.UTF-8
 user: luki
 group: luki
 localhost: ip.srv
+domain: wigger.one
 
 # NTP
 ntp_enabled: true

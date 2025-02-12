@@ -29,3 +29,9 @@ ansible_port=22
 #[cooper:vars]
 #hostname="cooper"
 #region="CH"
+
+#[smaug]
+#192.168.0.76
+#[smaug:vars]
+#hostname="smaug"
+#region="CH"

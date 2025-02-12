@@ -17,7 +17,7 @@
     - "/mnt/container/youtrack/backups"
     - "/mnt/container/youtrack/temp"
 
-- name: Set up YouTrack server
+- name: Set up YouTrack
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"

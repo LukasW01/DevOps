@@ -27,7 +27,7 @@
     password: "{{ password | password_hash('sha512', '7n7XzaPpV3bMvpFJ') }}"
   when: ansible_os_family == "RedHat"
   
-- name: Update root password
+- name: Update root password (debian)
   ansible.builtin.user:
       name: root
       password: "{{ password | password_hash('sha512', '7n7XzaPpV3bMvpFJ') }}"
