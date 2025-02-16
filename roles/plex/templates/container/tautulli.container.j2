@@ -1,0 +1,15 @@
+# tautulli.container
+[Container]
+AutoUpdate=registry
+ContainerName=tautulli
+Image=ghcr.io/tautulli/tautulli:latest
+Network=app.network
+PublishPort=8181:8181
+Volume=/mnt/container/tautulli/:/config:Z
+Environment=TZ=Europe/Amsterdam PUID=1000 PGID=1000
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

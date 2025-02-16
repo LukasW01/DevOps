@@ -1,0 +1,2 @@
+- name: Include plex
+  ansible.builtin.include_tasks: plex.yml
