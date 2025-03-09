@@ -1,3 +1,30 @@
+- name: Create Plex
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0770"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: true
+  loop:
+    - "/mnt/container/plex/config"
+    - "/mnt/container/plex/transcode"
+    - "/mnt/container/tautulli"
+    - "/mnt/container/overseerr"
+
+- name: Set up Plex, Tautulli, and Overseerr
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - src: container/plex.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/plex.container"
+    - src: container/tautulli.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/tautulli.container"
+    - src: container/overseerr.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/overseerr.container"
+
 - name: Mount SMB volume
   ansible.posix.mount:
     src: //192.168.1.6/media
