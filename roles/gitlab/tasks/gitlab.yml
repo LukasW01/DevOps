@@ -1,0 +1,33 @@
+- name: Create Gitlab directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0770"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: true
+  loop:
+    - "/mnt/container/gitlab/db"
+    - "/mnt/container/gitlab/valkey"
+    - "/mnt/container/gitlab/config"
+    - "/mnt/container/gitlab/logs"
+    - "/mnt/container/gitlab/data"
+
+- name: Set up Gitlab
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - src: container/gitlab.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/gitlab.container"
+    - src: env/gitlab.rb.j2
+      dest: "/mnt/container/gitlab/config/gitlab.rb"
+    - src: container/gitlab-db.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/gitlab-db.container"
+    - src: container/gitlab-valkey.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/gitlab-valkey.container"
+    - src: env/settings.env.j2
+      dest: "/mnt/container/gitlab/settings.env"
+    
+
