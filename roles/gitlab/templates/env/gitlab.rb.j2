@@ -491,10 +491,6 @@ gitlab_rails['redis_port'] = 6379
 gitlab_rails['redis_password'] = "{{ redis_pw }}"
 gitlab_rails['redis_database'] = 0
 gitlab_rails['redis_enable_client'] = true
-gitlab_rails['redis_connect_timeout'] = nil
-gitlab_rails['redis_read_timeout'] = nil
-gitlab_rails['redis_write_timeout'] = nil
-gitlab_rails['redis_yml_override'] = nil
 
 ################################################################################
 ## Container Registry settings
@@ -1338,7 +1334,7 @@ storage_check['enable'] = true
 ################################################################################
 # Let's Encrypt integration
 ################################################################################
-letsencrypt['enable'] = false
+letsencrypt['enable'] = true
 letsencrypt['contact_emails'] = ['{{ mail }}'] # This should be an array of email addresses to add as contacts
 letsencrypt['key_size'] = 4096
 # letsencrypt['wwwroot'] = '/var/opt/gitlab/nginx/www'
