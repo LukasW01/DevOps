@@ -6,7 +6,6 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     recurse: true
-  loop: "{{ range(1, 5) | list }}"
 
 - name: Set up Gitlab
   ansible.builtin.template:
