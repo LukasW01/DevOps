@@ -2,6 +2,8 @@
 roles:
   - name: geerlingguy.security
   - name: geerlingguy.ntp
+  - name: geerlingguy.docker
+  - name: geerlingguy.pip
 
 collections:
   - name: community.docker

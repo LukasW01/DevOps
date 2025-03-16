@@ -7,3 +7,12 @@
 
 - name: Include env/backend
   ansible.builtin.include_tasks: env/backend.yml
+  when: hostvars[inventory_hostname]['backup'] == "true"
+
+- name: Include docker/docker
+  ansible.builtin.include_tasks: docker/docker.yml
+  when: hostvars[inventory_hostname]['docker'] == "true"
+
+- name: Include docker/container
+  ansible.builtin.include_tasks: docker/container.yml
+  when: hostvars[inventory_hostname]['docker'] == "true"

@@ -1,0 +1,9 @@
+---
+- name: Create a network
+  community.docker.docker_network:
+    name: "{{ item }}"
+  loop:
+    - backend
+    - app
+    - db
+    - web

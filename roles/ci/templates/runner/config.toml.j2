@@ -1,0 +1,32 @@
+concurrent = 10
+check_interval = 0
+connection_max_age = "15m0s"
+shutdown_timeout = 0
+
+[session_server]
+    session_timeout = 1800
+
+[[runners]]
+    name = "gitlab-runner"
+    url = "https://git.wigger.one"
+    token = "{{ runner_token }}"
+    executor = "docker"
+    limit = 0
+    request_concurrency = 1
+    [runners.docker]
+        image = "ruby:3.3"
+        privileged = true
+        volumes = ["/var/run/docker.sock:/var/run/docker.sock"]
+        shm_size = 0
+        network_mtu = 0
+    [runners.cache]
+        Type = "s3"
+        Path = "/cache"
+        Shared = false
+        [runners.cache.s3]
+            ServerAddress = "{{ s3_url_plain }}"
+            AccessKey = "{{ s3_access_key_id }}"
+            SecretKey = "{{ s3_secret_access_key }}"
+            BucketName = "gitlab-runner"
+            BucketLocation = "weur"
+            Insecure = false

@@ -1,0 +1,3 @@
+---
+- name: Include ci
+  ansible.builtin.include_tasks: ci.yml

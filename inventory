@@ -4,49 +4,61 @@
 ansible_user=root
 ansible_ssh_pass=root
 ansible_port=22
-ansible_ssh_private_key_file=ssh/ec_key
+#ansible_ssh_private_key_file=ssh/ec_key
 
 #[discord]
-#192.168.0.79
+#192.168.1.30
 
 #[discord:vars]
 #hostname="discord"
 #region="CH"
+#docker="false"
+#backup="true"
 
 #[web]
-#192.168.0.216
+#192.168.1.10
 
 #[web:vars]
 #hostname="web"
 #region="CH"
+#docker="false"
+#backup="true"
 
 #[minecraft]
-#192.168.0.169
+#192.168.1.31
 
 #[minecraft:vars]
 #hostname="minecraft"
 #region="CH"
+#docker="false"
+#backup="true"
 
 #[cooper]
-#192.168.0.87
+#192.168.1.34
 
 #[cooper:vars]
 #hostname="cooper"
 #region="CH"
+#docker="false"
+#backup="true"
 
 #[smaug]
-#192.168.0.76
+#192.168.1.33
 
 #[smaug:vars]
 #hostname="smaug"
 #region="CH"
+#docker="false"
+#backup="true"
 
 #[lernmit]
-#192.168.0.166
+#192.168.1.32
 
 #[lernmit:vars]
 #hostname="lernmit"
 #region="CH"
+#docker="false"
+#backup="true"
 
 #[joel]
 #192.168.0.35
@@ -54,6 +66,8 @@ ansible_ssh_private_key_file=ssh/ec_key
 #[joel:vars]
 #hostname="joel"
 #region="CH"
+#docker="false"
+#backup="true"
 
 #[wallace]
 #192.168.1.36
@@ -61,3 +75,14 @@ ansible_ssh_private_key_file=ssh/ec_key
 #[wallace:vars]
 #hostname="wallace"
 #region="CH"
+#docker="false"
+#backup="true"
+
+#[forrest]
+#192.168.1.37
+
+#[forrest:vars]
+#hostname="forrest"
+#region="CH"
+#docker="true"
+#backup="false"

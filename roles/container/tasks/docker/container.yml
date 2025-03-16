@@ -1,0 +1,28 @@
+---
+- name: Make sure Watchtower is created and running
+  community.general.docker_container:
+    name: "watchtower"
+    image: "ghcr.io/containrrr/watchtower:latest"
+    pull: yes
+    state: "started"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    restart_policy: unless-stopped
+    networks:
+      - name: "backend"
+    env:
+      WATCHTOWER_CLEANUP: "true"
+      TZ: "CEST"
+      WATCHTOWER_REMOVE_VOLUMES: "true"
+      WATCHTOWER_DEBUG: "true"
+      WATCHTOWER_TRACE: "true"
+      NO_COLOR: "true"
+      WATCHTOWER_POLL_INTERVAL: "86400"
+      WATCHTOWER_SCHEDULE: "0 0 0 * * *"
+      WATCHTOWER_ROLLING_RESTART: "true"
+      WATCHTOWER_TIMEOUT: "10s"
+      DOCKER_TLS_VERIFY: "true"
+      WATCHTOWER_WARN_ON_HEAD_FAILURE: "auto"
+      WATCHTOWER_HTTP_API_TOKEN: "{{ prometheus_pw }}"
+      WATCHTOWER_HTTP_API_METRICS: "true"
+      WATCHTOWER_NOTIFICATION_URL: "{{ watchtower_discord }}"

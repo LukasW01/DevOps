@@ -39,4 +39,41 @@ security_ssh_gss_api_authentication: "no"
 security_ssh_x11_forwarding: "no"
 
 security_sudoers_passworded:
-  - luki
+  - "{{ user }}"
+  
+# Edition can be one of: 'ce' (Community Edition) or 'ee' (Enterprise Edition).
+docker_edition: 'ce'
+docker_packages:
+  - "docker-{{ docker_edition }}"
+  - "docker-{{ docker_edition }}-cli"
+  - "docker-{{ docker_edition }}-rootless-extras"
+  - "containerd.io"
+  - docker-buildx-plugin
+docker_packages_state: present
+
+
+# Service options.
+docker_service_manage: true
+docker_service_state: started
+docker_service_enabled: true
+docker_restart_handler_state: restarted
+
+# Docker Compose Plugin options.
+docker_install_compose_plugin: true
+docker_compose_package: docker-compose-plugin
+docker_compose_package_state: present
+
+# Enable repo setup
+docker_add_repo: true
+
+# Docker repo URL.
+docker_repo_url: https://download.docker.com/linux
+
+# A list of users who will be added to the docker group.
+docker_users: 
+  - "{{ user }}"
+
+# Python (pip) options.
+pip_package: python3-pip
+pip_executable: "{{ 'pip3' if pip_package.startswith('python3') else 'pip' }}"
+pip_install_packages: ['requests']

@@ -1,0 +1,32 @@
+- name: Create Gitlab config directories
+  ansible.builtin.file:
+    path: "/mnt/container/gitlab/runner"
+    state: directory
+    mode: "0770"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: true
+  loop: "{{ range(1, 5) | list }}"
+
+- name: Set up Gitlab
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - src: runner/config.toml.j2
+      dest: "/mnt/container/gitlab/runner/config.toml"
+
+- name: Set up Gitlab Runner
+  community.general.docker_container:
+    name: "gitlab_runner"
+    image: "docker.io/gitlab/gitlab-runner:alpine"
+    restart_policy: unless-stopped
+    user: "root:root"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/mnt/container/gitlab/runner:/etc/gitlab-runner"
+    networks:
+      - name: "app"
+    pull: yes
+    state: "started"
