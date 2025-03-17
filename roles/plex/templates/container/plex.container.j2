@@ -3,12 +3,12 @@
 AutoUpdate=registry
 ContainerName=plex
 Image=docker.io/plexinc/pms-docker:latest
-Network=app.network
-PublishPort=32400:32400
+Network=host
 Volume=/mnt/container/plex/transcode:/transcode:Z
 Volume=/mnt/container/plex/config:/config:Z
 Volume=/mnt/media/:/media:ro
 Environment=HOSTNAME=Skynet TZ=Europe/Amsterdam PLEX_UID=1000 PLEX_GID=1000 CHANGE_CONFIG_DIR_OWNERSHIP=true
+AddDevice=/dev/dri:/dev/dri
 
 [Service]
 Restart=always
