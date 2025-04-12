@@ -76,7 +76,7 @@
 }
 
 # Host
-nimona.wigger.cloud {
+fi.wigger.cloud, nimona.wigger.cloud {
 	redir https://wigger.cloud
 }
 
@@ -228,26 +228,19 @@ de-wit.dev {
 }
  
 # Backend
-kopia-nimona.wigger.cloud {
-	reverse_proxy ip.srv:4001
-	encode gzip
-
-	import header
-	import logs
-}
-
-caddy-nimona.wigger.cloud {
-	metrics
-	encode gzip
-
-	import header
-	import logs
-}
-
-node-nimona.wigger.cloud {
-	reverse_proxy ip.srv:4000
-	encode gzip
-
-	import header
-	import logs
+*.fi.wigger.cloud {
+    @caddy host caddy.fi.wigger.cloud
+    handle @caddy {
+        metrics
+    }
+    
+    @node_exporter host node.fi.wigger.cloud
+    handle @node_exporter {
+        reverse_proxy localhost:4000
+    }
+    
+    encode gzip
+    
+    import header
+    import logs
 }

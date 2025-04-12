@@ -1,5 +1,5 @@
 ---
-- name: Main playbook
+- name: Main
   hosts: all
   become: true
   

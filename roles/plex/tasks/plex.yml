@@ -1,16 +1,16 @@
-#- name: Create Plex directories
-#  ansible.builtin.file:
-#    path: "{{ item }}"
-#    state: directory
-#    mode: "0770"
-#    owner: "{{ user }}"
-#    group: "{{ group }}"
-#    recurse: true
-#  loop:
-#    - "/mnt/container/plex/config"
-#    - "/mnt/container/plex/transcode"
-#    - "/mnt/container/tautulli"
-#    - "/mnt/container/overseerr"
+- name: Create Plex directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0775"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: true
+  loop:
+    - "/mnt/container/plex/config"
+    - "/mnt/container/plex/transcode"
+    - "/mnt/container/tautulli"
+    - "/mnt/container/overseerr"
 
 - name: Set up Plex, Tautulli, and Overseerr
   ansible.builtin.template:
