@@ -10,3 +10,4 @@ vault.txt
 become.txt
 ssh/
 data/
+.ansible/
