@@ -61,7 +61,7 @@ ansible_port=22
 #backup="true"
 
 #[joel]
-#192.168.0.35
+#192.168.1.35
 
 #[joel:vars]
 #hostname="joel"
@@ -86,3 +86,16 @@ ansible_port=22
 #region="CH"
 #docker="true"
 #backup="false"
+
+#[windows]
+#localhost
+
+#[web]
+#157.180.35.146
+
+#[web:vars]
+#hostname="web"
+#region="FI"
+#docker="false"
+#backup="false"
+

@@ -1,4 +1,4 @@
-- name: Set up discord bots
+- name: Set up Discord bots
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"

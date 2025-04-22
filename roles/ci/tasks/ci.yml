@@ -16,7 +16,7 @@
     - src: runner/config.toml.j2
       dest: "/mnt/container/gitlab/runner/config.toml"
 
-- name: Set up Gitlab Runner
+- name: Start Gitlab Runner
   community.general.docker_container:
     name: "gitlab_runner"
     image: "docker.io/gitlab/gitlab-runner:alpine"
@@ -27,5 +27,5 @@
       - "/mnt/container/gitlab/runner:/etc/gitlab-runner"
     networks:
       - name: "app"
-    pull: yes
+    pull: true
     state: "started"

@@ -76,13 +76,13 @@
 }
 
 # Host
-fi.wigger.cloud, nimona.wigger.cloud {
+fi.wigger.cloud, web.wigger.cloud {
 	redir https://wigger.cloud
 }
 
 # Services
-cdn.kell3r.ch, cdn.braendli.dev, cdn.de-wit.dev, cdn.wigger.one {
-    root * /usr/share/www/web-one/
+cdn.braendli.dev, cdn.de-wit.dev, cdn.wigger.one {
+    root * /usr/share/www/web-cdn/
     file_server {
         hide .git
         browse
@@ -104,17 +104,17 @@ api.wigger.one {
     }
 
     handle_path /ip {
-        var realip {remote_host}
+        vars realip {remote_host}
         
         @cf header CF-Connecting-IP *
-        var @cf realip {header.CF-Connecting-IP}
+        vars @cf realip {header.CF-Connecting-IP}
         
         @xf header X-Forwarded-For *
-        var @xf realip {header.X-Forwarded-For}
+        vars @xf realip {header.X-Forwarded-For}
         
         templates
         header Content-Type text/plain
-        respond "{var.realip}"
+        respond "{vars.realip}"
     }
         
     handle_path /health {
@@ -135,19 +135,23 @@ api.wigger.one {
 }
 
 webdav.wigger.one {
-	@dav path /*
-	handle @dav {
-		@notget not method GET
-		route @notget {
-			basic_auth {
-					git $2a$14$rQ7TeAs/b.r8Kf6Lhnscg.MtmO0sxfcSOj2MzkWBXjRu7oJPuVWZu
-			}
-			webdav /* {
-					root /usr/share/
-					prefix /
-			}
-		}
-	}
+     handle {
+             respond /* `{"http": "418 - I'm a teapot"}` 418
+     }
+
+     @dav path /dav/*
+     handle @dav {
+             @notget not method GET
+             route @notget {
+                     basic_auth {
+                             git $2a$14$rQ7TeAs/b.r8Kf6Lhnscg.MtmO0sxfcSOj2MzkWBXjRu7oJPuVWZu
+                     }
+                     webdav /dav/* {
+                             root /usr/share/
+                             prefix /dav
+                     }
+            }
+     }
 
 	encode gzip
 
@@ -181,18 +185,6 @@ wigger.one {
 
 wigger.dev {
 	root * /usr/share/www/web-dev/public/
-	file_server
-
-	encode gzip
-
-	import handle_errors_404
-	import header
-	import logs
-	import git
-}
-
-kell3r.ch {
-	root * /usr/share/www/web-michael/
 	file_server
 
 	encode gzip
