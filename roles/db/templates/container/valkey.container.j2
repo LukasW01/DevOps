@@ -1,12 +1,12 @@
-# gitlab-valkey.container
+# valkey.container
 [Container]
 AutoUpdate=registry
-ContainerName=gitlab_valkey
-Image=docker.io/valkey/valkey:latest
+ContainerName=valkey
+Image=docker.io/valkey/valkey:alpine
 Network=db.network
 PublishPort=6379:6379
-Volume=/mnt/container/gitlab/valkey/:/data:Z
-EnvironmentFile=/mnt/container/gitlab/settings.env
+Volume=/mnt/container/db/valkey/:/data:Z
+EnvironmentFile=/mnt/container/db/settings.env
 Exec=valkey-server --port 6379 --requirepass {{ redis_pw }} 
 
 [Service]

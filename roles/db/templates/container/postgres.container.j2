@@ -1,0 +1,15 @@
+# postgres.container
+[Container]
+AutoUpdate=registry
+ContainerName=postgres
+Image=docker.io/postgres:17-alpine
+Network=db.network
+PublishPort=5432:5432
+Volume=/mnt/container/db/postgres/:/var/lib/postgresql/data:Z
+EnvironmentFile=/mnt/container/db/settings.env
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

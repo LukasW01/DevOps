@@ -1,0 +1,26 @@
+- name: Create DB directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0770"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: true
+  loop:
+    - "/mnt/container/db/postgres"
+    - "/mnt/container/db/valkey"
+
+- name: Set up DB
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - src: container/postgres.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/postgres.container"
+    - src: container/valkey.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/valkey.container"
+    - src: env/settings.env.j2
+      dest: "/mnt/container/db/settings.env"
+    
+

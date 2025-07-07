@@ -6,6 +6,9 @@ ansible_ssh_pass=root
 ansible_port=22
 #ansible_ssh_private_key_file=ssh/ec_key
 
+#[windows]
+#localhost
+
 #[discord]
 #192.168.1.30
 
@@ -20,6 +23,24 @@ ansible_port=22
 
 #[web:vars]
 #hostname="web"
+#region="CH"
+#docker="false"
+#backup="true"
+
+#[web]
+#157.180.35.146
+
+#[web:vars]
+#hostname="web"
+#region="FI"
+#docker="false"
+#backup="false"
+
+#[db]
+#192.168.1.11
+
+#[db:vars]
+#hostname="db"
 #region="CH"
 #docker="false"
 #backup="true"
@@ -51,15 +72,6 @@ ansible_port=22
 #docker="false"
 #backup="true"
 
-#[lernmit]
-#192.168.1.32
-
-#[lernmit:vars]
-#hostname="lernmit"
-#region="CH"
-#docker="false"
-#backup="true"
-
 #[joel]
 #192.168.1.35
 
@@ -86,16 +98,3 @@ ansible_port=22
 #region="CH"
 #docker="true"
 #backup="false"
-
-#[windows]
-#localhost
-
-#[web]
-#157.180.35.146
-
-#[web:vars]
-#hostname="web"
-#region="FI"
-#docker="false"
-#backup="false"
-

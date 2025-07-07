@@ -464,7 +464,7 @@ gitlab_rails['db_collation'] = 'UTF8'
 gitlab_rails['db_database'] = "gitlab"
 gitlab_rails['db_username'] = "gitlab"
 gitlab_rails['db_password'] = "{{ postgres_pw }}"
-gitlab_rails['db_host'] = "gitlab_postgres"
+gitlab_rails['db_host'] = "db.local"
 gitlab_rails['db_port'] = 5432
 gitlab_rails['db_prepared_statements'] = true
 gitlab_rails['db_statements_limit'] = 1000
@@ -486,7 +486,7 @@ gitlab_rails['db_database_tasks'] = true
 ###! Docs: https://docs.gitlab.com/omnibus/settings/redis.html
 
 #### Redis TCP connection
-gitlab_rails['redis_host'] = "gitlab_valkey"
+gitlab_rails['redis_host'] = "db.local"
 gitlab_rails['redis_port'] = 6379
 gitlab_rails['redis_password'] = "{{ redis_pw }}"
 gitlab_rails['redis_database'] = 0
@@ -498,8 +498,6 @@ gitlab_rails['redis_enable_client'] = true
 ################################################################################
 
 # registry_external_url 'https://registry.example.com'
-
-### Settings used by GitLab application
 gitlab_rails['registry_enabled'] = false
 
 ################################################################################
@@ -1011,7 +1009,7 @@ mattermost['enable'] = false
 ###!   the line below.**
 monitoring_role['enable'] = true
 
-prometheus['enable'] = true
+prometheus['enable'] = false
 prometheus['monitor_kubernetes'] = true
 # prometheus['home'] = '/var/opt/gitlab/prometheus'
 # prometheus['log_directory'] = '/var/log/gitlab/prometheus'
@@ -1066,7 +1064,7 @@ prometheus['scrape_timeout'] = 15
 # }
 
 ##! Advanced settings. Should be changed only if absolutely needed.
-prometheus['listen_address'] = 'localhost:9090'
+# prometheus['listen_address'] = 'localhost:9090'
 
 
 ##! Service name used to register Prometheus as a Consul service
@@ -1078,7 +1076,7 @@ prometheus['consul_service_name'] = 'prometheus'
 ## Prometheus Alertmanager
 ################################################################################
 
-alertmanager['enable'] = true
+alertmanager['enable'] = false
 # alertmanager['home'] = '/var/opt/gitlab/alertmanager'
 # alertmanager['log_directory'] = '/var/log/gitlab/alertmanager'
 alertmanager['admin_email'] = '{{ mail }}'
@@ -1093,7 +1091,7 @@ alertmanager['admin_email'] = '{{ mail }}'
 # }
 
 ##! Advanced settings. Should be changed only if absolutely needed.
-alertmanager['listen_address'] = 'localhost:9093'
+# alertmanager['listen_address'] = 'localhost:9093'
 # alertmanager['global'] = {}
 
 ################################################################################
@@ -1101,7 +1099,7 @@ alertmanager['listen_address'] = 'localhost:9093'
 ##! Docs: https://docs.gitlab.com/ee/administration/monitoring/prometheus/node_exporter.html
 ################################################################################
 
-node_exporter['enable'] = true
+node_exporter['enable'] = false
 # node_exporter['home'] = '/var/opt/gitlab/node-exporter'
 # node_exporter['log_directory'] = '/var/log/gitlab/node-exporter'
 # node_exporter['flags'] = {
@@ -1113,7 +1111,7 @@ node_exporter['enable'] = true
 # }
 
 ##! Advanced settings. Should be changed only if absolutely needed.
-node_exporter['listen_address'] = 'localhost:9100'
+# node_exporter['listen_address'] = 'localhost:9100'
 
 ##! Service name used to register Node Exporter as a Consul service
 node_exporter['consul_service_name'] = 'node-exporter'
@@ -1125,7 +1123,7 @@ node_exporter['consul_service_name'] = 'node-exporter'
 ##! Docs: https://docs.gitlab.com/ee/administration/monitoring/prometheus/redis_exporter.html
 ################################################################################
 
-redis_exporter['enable'] = true
+redis_exporter['enable'] = false
 # redis_exporter['log_directory'] = '/var/log/gitlab/redis-exporter'
 # redis_exporter['flags'] = {
 #   'redis.addr' => "unix:///var/opt/gitlab/redis/redis.socket",
@@ -1136,7 +1134,7 @@ redis_exporter['enable'] = true
 # }
 
 ##! Advanced settings. Should be changed only if absolutely needed.
-redis_exporter['listen_address'] = 'localhost:9121'
+# redis_exporter['listen_address'] = 'localhost:9121'
 
 ##! Service name used to register Redis Exporter as a Consul service
 redis_exporter['consul_service_name'] = 'redis-exporter'
@@ -1148,8 +1146,8 @@ redis_exporter['consul_service_name'] = 'redis-exporter'
 ##! Docs: https://docs.gitlab.com/ee/administration/monitoring/prometheus/postgres_exporter.html
 ################################################################################
 
-postgres_exporter['enable'] = true
-postgres_exporter['listen_address'] = 'localhost:9187'
+postgres_exporter['enable'] = false
+# postgres_exporter['listen_address'] = 'localhost:9187'
 postgres_exporter['sslmode'] = 'disable'
 # postgres_exporter['home'] = '/var/opt/gitlab/postgres-exporter'
 # postgres_exporter['log_directory'] = '/var/log/gitlab/postgres-exporter'
@@ -1173,17 +1171,17 @@ postgres_exporter['consul_service_name'] = 'postgres-exporter'
 ################################################################################
 
 
-gitlab_exporter['enable'] = true
+gitlab_exporter['enable'] = false
 # gitlab_exporter['log_directory'] = "/var/log/gitlab/gitlab-exporter"
 # gitlab_exporter['home'] = "/var/opt/gitlab/gitlab-exporter"
-
+ 
 ##! Advanced settings. Should be changed only if absolutely needed.
 gitlab_exporter['listen_address'] = 'localhost'
 gitlab_exporter['listen_port'] = '9168'
 
 ##! Manage gitlab-exporter sidekiq probes. false by default when Sentinels are
 ##! found.
-gitlab_exporter['probe_sidekiq'] = false
+gitlab_exporter['probe_sidekiq'] = true
 
 ##! Service name used to register GitLab Exporter as a Consul service
 gitlab_exporter['consul_service_name'] = 'gitlab-exporter'
@@ -1422,13 +1420,13 @@ gitlab_rails['service_desk_email_enabled'] = false
 ####! to reference the item being replied to.
 ####! **The placeholder can be omitted but if present, it must appear in the
 ####!   "user" part of the address (before the `@`).**
-gitlab_rails['service_desk_email_address'] = "contact_project+%{key}@www.wigger.one"
+gitlab_rails['service_desk_email_address'] = "service_desk+%{key}@www.wigger.one"
 
 #### Service Desk Email account username
 ####! **With third party providers, this is usually the full email address.**
 ####! **With self-hosted email servers, this is usually the user part of the
 ####!   email address.**
-gitlab_rails['service_desk_email_email'] = "contact_project@www.wigger.one"
+gitlab_rails['service_desk_email_email'] = "service_desk@www.wigger.one"
 
 #### Service Desk Email account password
 gitlab_rails['service_desk_email_password'] = "{{smtp_password }}"
@@ -1448,10 +1446,6 @@ gitlab_rails['service_desk_email_ssl'] = true
 #### How service desk emails are delivered to Rails process. Accept either
 #### sidekiq or webhook. The default config is webhook.
 gitlab_rails['service_desk_email_delivery_method'] = "webhook"
-
-#### Token to authenticate webhook requests. The token must be exactly 32 bytes,
-#### encoded with base64
-# gitlab_rails['service_desk_email_auth_token'] = nil
 
 #################################################################################
 ## (Go-)Crond
