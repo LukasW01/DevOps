@@ -1,2 +1,0 @@
-- name: Include lernmit
-  ansible.builtin.include_tasks: lernmit.yml
