@@ -125,17 +125,29 @@ init7.wigger.cloud {
     import logs
 }
 
+*.db.wigger.cloud {
+    @node_exporter host node.db.wigger.cloud
+    handle @node_exporter {
+        reverse_proxy db.local:4000
+    }
+    
+    @kopia host kopia.db.wigger.cloud
+    handle @kopia {
+        reverse_proxy db.local:4001
+    }
+    
+    encode gzip
+    
+    import header
+    import logs
+}
+
 *.forrest.wigger.cloud {
     @node_exporter host node.forrest.wigger.cloud
     handle @node_exporter {
         reverse_proxy forrest.local:4000
     }
-    
-    @kopia host kopia.forrest.wigger.cloud
-    handle @kopia {
-        reverse_proxy forrest.local:4001
-    }
-    
+
     encode gzip
     
     import header
@@ -202,40 +214,6 @@ init7.wigger.cloud {
     @kopia host kopia.smaug.wigger.cloud
     handle @kopia {
         reverse_proxy smaug.local:4001
-    }
-    
-    encode gzip
-    
-    import header
-    import logs
-}
-
-*.lernmit.wigger.cloud {
-    @node_exporter host node.lernmit.wigger.cloud
-    handle @node_exporter {
-        reverse_proxy lernmit.local:4000
-    }
-    
-    @kopia host kopia.lernmit.wigger.cloud
-    handle @kopia {
-        reverse_proxy lernmit.local:4001
-    }
-    
-    encode gzip
-    
-    import header
-    import logs
-}
-
-*.minecraft.wigger.cloud {
-    @node_exporter host node.minecraft.wigger.cloud
-    handle @node_exporter {
-        reverse_proxy minecraft.local:4000
-    }
-    
-    @kopia host kopia.minecraft.wigger.cloud
-    handle @kopia {
-        reverse_proxy minecraft.local:4001
     }
     
     encode gzip
