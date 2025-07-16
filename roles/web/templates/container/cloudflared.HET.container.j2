@@ -1,0 +1,14 @@
+# cloudflared.container
+[Container]
+AutoUpdate=registry
+ContainerName=cloudflared
+Image=docker.io/cloudflare/cloudflared:latest
+Network=web.network
+Network=backend.network
+Exec=tunnel --no-autoupdate run --token {{ warp_token_fi }}
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

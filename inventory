@@ -36,6 +36,15 @@ ansible_port=22
 #docker="false"
 #backup="false"
 
+#[web]
+#10.90.10.103
+#
+#[web:vars]
+#hostname="web"
+#region="HET"
+#docker="false"
+#backup="false"
+
 #[db]
 #192.168.1.11
 
@@ -45,8 +54,17 @@ ansible_port=22
 #docker="false"
 #backup="true"
 
+#[db]
+#10.90.10.102
+
+#[db:vars]
+#hostname="db"
+#region="FI"
+#docker="false"
+#backup="true"
+
 #[minecraft]
-#192.168.1.31
+#10.90.10.101
 
 #[minecraft:vars]
 #hostname="minecraft"

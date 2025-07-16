@@ -1,0 +1,79 @@
+# Import
+(header) {
+	header {
+		Permissions-Policy "interest-cohort=()"
+		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "SAMEORIGIN"
+		X-XSS-Protection "1; mode=block"
+		Referrer-Policy "same-origin"
+		Content-Security-Policy "upgrade-insecure-requests; frame-ancestors 'self'"
+	}
+}
+
+(ipfilter) {
+	@ban {
+		not remote_ip 123.123.123.123
+		path *
+	}
+	redir @ban https://wigger.one/ban/
+}
+
+(logs) {
+	log {
+		output file /var/log/access.log {
+			roll_size 1gb
+			roll_keep 5
+			roll_keep_for 720h
+		}
+	}
+}
+
+(request_body) {
+	request_body {
+		max_size 15MB
+	}
+}
+
+(git) {
+    respond /.git/* "Access denied" 403 {
+        close
+    }
+}
+
+(handle_errors_404) {
+	handle_errors {
+		@404 expression {err.status_code} == 404
+		handle @404 {
+			rewrite * /404.html
+			file_server
+		}
+	}
+}
+
+(handle_errors_index) {
+	handle_errors {
+		@404 expression {err.status_code} == 404
+		handle @404 {
+			rewrite * /index.html
+			file_server
+		}
+	}
+}
+
+# Globals
+{
+    #CDN-ACME
+    acme_dns cloudflare {{ cloudflare_api }}
+    #Debug-Mode
+    #debug
+    #Metrics
+    servers {
+        metrics
+    }
+}
+
+# Host
+hetzner.wigger.cloud, pike.wigger.cloud {
+	redir https://wigger.cloud
+}
