@@ -4,9 +4,7 @@ AutoUpdate=registry
 ContainerName=bitwarden_app
 EnvironmentFile=/mnt/container/bitwarden/settings.env
 Image=docker.io/bitwarden/self-host:beta
-Network=web.network
 Network=app.network
-Network=db.network
 Volume=/mnt/container/bitwarden/data:/etc/bitwarden:Z
 Volume=/mnt/container/bitwarden/logs:/var/log/bitwarden:Z
 

@@ -1,0 +1,20 @@
+---
+- name: Create Bitwarden directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0770"
+  loop:
+    - "/mnt/container/bitwarden/data"
+    - "/mnt/container/bitwarden/logs"
+
+- name: Set up Bitwarden
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - src: container/bitwarden_app.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/bitwarden_app.container"
+    - src: env/settings.env.j2
+      dest: /mnt/container/bitwarden/settings.env
