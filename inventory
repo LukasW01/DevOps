@@ -116,3 +116,12 @@ ansible_port=22
 #region="CH"
 #docker="true"
 #backup="false"
+
+#[fragile]
+#192.168.1.32
+
+#[fragile:vars]
+#hostname="fragile"
+#region="CH"
+#docker="false"
+#backup="true"

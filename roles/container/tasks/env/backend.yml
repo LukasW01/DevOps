@@ -8,8 +8,6 @@
     - "/mnt/container/backend/kopia/config"
     - "/mnt/container/backend/kopia/logs"
     - "/mnt/container/backend/kopia/cache"
-    - "/mnt/container/backend/pg_brm/backup"
-    - "/mnt/container/backend/pg_brm/log"
     - "/mnt/container/backend/node_exporter"
 
 - name: Set up backend environment variables

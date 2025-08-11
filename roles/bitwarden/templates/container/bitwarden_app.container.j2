@@ -2,11 +2,12 @@
 [Container]
 AutoUpdate=registry
 ContainerName=bitwarden_app
-EnvironmentFile=/mnt/container/bitwarden/settings.env
-Image=docker.io/bitwarden/self-host:beta
+Image=ghcr.io/bitwarden/self-host:beta
 Network=app.network
+PublishPort=8080:8080
 Volume=/mnt/container/bitwarden/data:/etc/bitwarden:Z
 Volume=/mnt/container/bitwarden/logs:/var/log/bitwarden:Z
+EnvironmentFile=/mnt/container/bitwarden/settings.env
 
 [Service]
 Restart=always

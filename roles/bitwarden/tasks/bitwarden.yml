@@ -3,7 +3,9 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    mode: "0770"
+    mode: "0775"
+    owner: 1000
+    group: 1000
   loop:
     - "/mnt/container/bitwarden/data"
     - "/mnt/container/bitwarden/logs"
@@ -12,7 +14,7 @@
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    mode: '0644'
+    mode: "0644"
   loop:
     - src: container/bitwarden_app.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/bitwarden_app.container"

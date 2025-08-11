@@ -17,7 +17,6 @@
   loop:
     - "network/rootless/"
     #- "volume/rootless/"
-    - "container/backend/rootless/"
 
 - name: Copy rootfull systemd files for quadlet (network, volume, image, container)
   ansible.builtin.copy:
