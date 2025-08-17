@@ -3,7 +3,7 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    mode: "0775"
+    mode: "0770"
     owner: "{{ user }}"
     group: "{{ group }}"
     recurse: true
@@ -23,27 +23,27 @@
     dest: "{{ item.dest }}"
     mode: '0644'
   loop:
-    - src: "env/lemmy/settings.env.j2"
+    - src: env/lemmy/settings.env.j2
       dest: "/mnt/container/lemmy/settings.env"
-    - src: "env/lemmy/config/lemmy.hjson.j2"
+    - src: env/lemmy/config/lemmy.hjson.j2
       dest: "/mnt/container/lemmy/config/lemmy.hjson"
-    - src: "env/mastodon/settings.env.j2"
+    - src: env/mastodon/settings.env.j2
       dest: "/mnt/container/mastodon/settings.env"
-    - src: "env/dendrite/config/dendrite.yaml.j2"
+    - src: env/dendrite/config/dendrite.yaml.j2
       dest: "/mnt/container/dendrite/config/dendrite.yaml"
-    - src: "env/dendrite/config/matrix_key.pem.j2"
+    - src: env/dendrite/config/matrix_key.pem.j2
       dest: "/mnt/container/dendrite/config/matrix_key.pem"
-    - src: "container/dendrite/dendrite_app.container.j2"
+    - src: container/dendrite/dendrite_app.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/dendrite_app.container"
-    - src: "container/lemmy/lemmy_app.container.j2"
+    - src: container/lemmy/lemmy_app.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/lemmy_app.container"
-    - src: "container/lemmy/lemmy_web.container.j2"
+    - src: container/lemmy/lemmy_web.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/lemmy_web.container"
-    - src: "container/lemmy/lemmy_pictrs.container.j2"
+    - src: container/lemmy/lemmy_pictrs.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/lemmy_pictrs.container"
-    - src: "container/mastodon/mastodon_sidekiq.container.j2"
+    - src: container/mastodon/mastodon_sidekiq.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/mastodon_sidekiq.container"
-    - src: "container/mastodon/mastodon_web.container.j2"
+    - src: container/mastodon/mastodon_web.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/mastodon_web.container"
-    - src: "container/mastodon/mastodon_streaming.container.j2"
+    - src: container/mastodon/mastodon_streaming.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/mastodon_streaming.container"
