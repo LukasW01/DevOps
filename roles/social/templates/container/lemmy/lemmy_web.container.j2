@@ -1,0 +1,14 @@
+# lemmy_web.container
+[Container]
+AutoUpdate=registry
+ContainerName=lemmy_web
+Image=docker.io/dessalines/lemmy-ui:v0.19.12
+Network=app.network
+PublishPort=1234:1234
+EnvironmentFile=/mnt/container/lemmy/settings.env
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

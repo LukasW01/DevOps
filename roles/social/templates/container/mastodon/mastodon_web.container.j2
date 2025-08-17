@@ -1,0 +1,16 @@
+# mastodon_web.container
+[Container]
+AutoUpdate=registry
+ContainerName=mastodon_web
+Image=ghcr.io/mastodon/mastodon:latest
+Network=app.network
+PublishPort=3000:3000
+Exec=bash -c 'rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000'
+EnvironmentFile=/mnt/container/mastodon/settings.env
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
+

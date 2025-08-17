@@ -10,7 +10,7 @@
     # Password to connect to postgres
     password: "{{ postgres_pw }}"
     # Host where postgres is running
-    host: "lemmy_postgres"
+    host: "db.local"
     # Port where postgres can be accessed
     port: 5432
     # Name of the postgres database for lemmy
@@ -25,6 +25,12 @@
     url: "http://lemmy_pictrs:8080/"
     # Set a custom pictrs API key. ( Required for deleting images )
     api_key: "{{ lemmy_pictrs }}"
+    # If enabled, all images from remote domains are rewritten to pass through
+    # `/api/v3/image_proxy`, including embedded images in markdown. Images are stored temporarily
+    # in pict-rs for caching. This improves privacy as users don't expose their IP to untrusted
+    # servers, and decreases load on other servers. However it increases bandwidth use for the
+    # local server.
+    image_mode: "ProxyAllImages"
   }
   # Email sending configuration. All options except login/password are mandatory
   email: {
@@ -35,7 +41,7 @@
     # Password to login to the smtp server
     smtp_password: "{{ smtp_password }}"
     # Address to send emails from, eg "noreply@your-instance.com"
-    smtp_from_address: "News (Lemmy) <{{ smtp_user }}>"
+    smtp_from_address: "{{ smtp_user }}"
     # Whether or not smtp connections should use tls. Can be none, tls, or starttls
     tls_type: "tls"
   }
@@ -43,16 +49,11 @@
     bind: "0.0.0.0"
     port: 10002
   }
-  # Parameters for automatic configuration of new instance (only used at first start)
-  setup: {
-    # Username for the admin user
-    admin_username: "lukas"
-    # Password for the admin user. It must be at least 10 characters.
-    admin_password: "{{ lemmy_pw }}"
-    # Name of the site (can be changed later)
-    site_name: "News (Lemmy)"
-    # Email for the admin user (optional, can be omitted and set later through the website)
-    admin_email: "lukas@wigger.one"
+  federation: {
+    # Limit to the number of concurrent outgoing federation requests per target instance.
+    # Set this to a higher value than 1 (e.g. 6) only if you have a huge instance (>10 activities
+    # per second) and if a receiving instance is not keeping up.
+    concurrent_sends_per_instance: 1
   }
   # the domain name of your instance (mandatory)
   hostname: "news.wigger.one"

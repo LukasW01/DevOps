@@ -2,10 +2,8 @@
 [Container]
 AutoUpdate=registry
 ContainerName=dendrite_app
-Image=ghcr.io/matrix-org/dendrite-monolith:latest
+Image=ghcr.io/element-hq/dendrite-monolith:latest
 Network=app.network
-Network=web.network
-Network=db.network
 Volume=/mnt/container/dendrite/media:/var/dendrite/media:Z
 Volume=/mnt/container/dendrite/config:/etc/dendrite:Z
 Volume=/mnt/container/dendrite/jetstream:/var/dendrite/jetstream:Z

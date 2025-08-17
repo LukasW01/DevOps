@@ -2,13 +2,11 @@
 [Container]
 AutoUpdate=registry
 ContainerName=mastodon_streaming
+Image=ghcr.io/mastodon/mastodon-streaming:latest
+Network=app.network
+PublishPort=4000:4000
 EnvironmentFile=/mnt/container/mastodon/settings.env
 Exec=node ./streaming
-HealthCmd='wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1'
-Image=ghcr.io/mastodon/mastodon:latest
-Network=app.network
-Network=web.network
-Network=db.network
 
 [Service]
 Restart=always

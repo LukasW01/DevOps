@@ -2,11 +2,11 @@
 [Container]
 AutoUpdate=registry
 ContainerName=lemmy_pictrs
-EnvironmentFile=/mnt/container/lemmy/settings.env
 Image=docker.io/asonix/pictrs:latest
 Network=app.network
-Network=web.network
+PublishPort=8080:8080
 Volume=/mnt/container/lemmy/pictrs:/mnt:Z
+EnvironmentFile=/mnt/container/lemmy/settings.env
 
 [Service]
 Restart=always
