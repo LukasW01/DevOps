@@ -20,7 +20,7 @@
   loop:
     - src: container/caddy.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/caddy.container"
-    - src: "container/cloudflared.{{ hostvars[inventory_hostname]['region'] }}.container.j2"
+    - src: container/cloudflared.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/cloudflared.container"
-    - src: "caddy/Caddyfile.{{ hostvars[inventory_hostname]['region'] }}.j2"
+    - src: caddy/Caddyfile.{{ hostvars[inventory_hostname]['region'] }}.j2
       dest: "/mnt/caddy/Caddyfile"

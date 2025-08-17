@@ -1,16 +1,17 @@
 ---
-- name: Create /mnt/container/backend directories
+- name: Create Backend directories
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     mode: "0775"
+    recurse: true
   loop:
     - "/mnt/container/backend/kopia/config"
     - "/mnt/container/backend/kopia/logs"
     - "/mnt/container/backend/kopia/cache"
     - "/mnt/container/backend/node_exporter"
 
-- name: Set up backend environment variables
+- name: Set up Backend
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"

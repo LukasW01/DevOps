@@ -72,12 +72,12 @@
     }
 }
 
-#Host
+# Host
 init7.wigger.cloud {
     redir https://wigger.cloud
 }
 
-#App
+# App
 *.wigger.one {
     @plex host plex.wigger.one
     handle @plex {
@@ -96,6 +96,7 @@ init7.wigger.cloud {
     import logs
 }
 
+# Backend
 *.ch.wigger.cloud {
     @caddy host caddy.ch.wigger.cloud
     handle @caddy {
@@ -163,6 +164,23 @@ init7.wigger.cloud {
     @kopia host kopia.wallace.wigger.cloud
     handle @kopia {
         reverse_proxy wallace.local:4001
+    }
+    
+    encode gzip
+    
+    import header
+    import logs
+}
+
+*.fragile.wigger.cloud {
+    @node_exporter host node.fragile.wigger.cloud
+    handle @node_exporter {
+        reverse_proxy fragile.local:4000
+    }
+    
+    @kopia host kopia.fragile.wigger.cloud
+    handle @kopia {
+        reverse_proxy fragile.local:4001
     }
     
     encode gzip

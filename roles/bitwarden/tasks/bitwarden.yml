@@ -4,8 +4,9 @@
     path: "{{ item }}"
     state: directory
     mode: "0775"
-    owner: 1000
-    group: 1000
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: true
   loop:
     - "/mnt/container/bitwarden/data"
     - "/mnt/container/bitwarden/logs"
@@ -19,4 +20,4 @@
     - src: container/bitwarden_app.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/bitwarden_app.container"
     - src: env/settings.env.j2
-      dest: /mnt/container/bitwarden/settings.env
+      dest: "/mnt/container/bitwarden/settings.env"

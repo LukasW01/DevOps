@@ -21,5 +21,3 @@
       dest: "/home/{{ user }}/.config/containers/systemd/gitlab.container"
     - src: env/gitlab.rb.j2
       dest: "/mnt/container/gitlab/config/gitlab.rb"
-    - src: env/settings.env.j2
-      dest: "/mnt/container/gitlab/settings.env"

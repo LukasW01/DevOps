@@ -4,7 +4,6 @@ AutoUpdate=registry
 ContainerName=gitlab_app
 Image=docker.io/gitlab/gitlab-ce:latest
 Network=app.network
-Network=db.network
 PublishPort=8080:80
 PublishPort=8443:443
 Volume=/mnt/container/gitlab/config:/etc/gitlab:Z

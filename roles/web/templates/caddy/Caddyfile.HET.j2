@@ -77,3 +77,145 @@
 hetzner.wigger.cloud, pike.wigger.cloud {
 	redir https://wigger.cloud
 }
+
+# App
+social.wigger.one {
+	reverse_proxy maverick.local:3000 {
+		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+	}
+
+	reverse_proxy /api/v1/streaming* maverick.local:4000 {
+		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+	}
+
+	header /sw.js  Cache-Control "public, max-age=0";
+	header /emoji* Cache-Control "public, max-age=31536000, immutable"
+	header /packs* Cache-Control "public, max-age=31536000, immutable"
+	header /system/accounts/avatars* Cache-Control "public, max-age=31536000, immutable"
+	header /system/media_attachments/files* Cache-Control "public, max-age=31536000, immutable"
+	header Access-Control-Allow-Origin *
+
+	encode gzip
+
+	import header
+	import logs
+}
+
+news.wigger.one {
+	reverse_proxy maverick.local:1234 {
+        header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+        header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+    }
+
+    @lemmy path /api/* /pictrs/* /feeds/* /nodeinfo/* /.well-known/*
+	handle @lemmy {
+		reverse_proxy maverick.local:8536 {
+            header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+            header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+        }
+	}
+
+	@lemmy-hdr header Accept application/*
+	handle @lemmy-hdr {
+		reverse_proxy maverick.local:8536 {
+            header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+            header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+        }
+	}
+
+	@lemmy-post method POST
+	handle @lemmy-post {
+			reverse_proxy maverick.local:8536  {
+            header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+            header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+        }
+	}
+
+	encode gzip
+
+	import header
+	import logs
+}
+
+
+www.wigger.one {
+    @matrix path /_matrix/* /.well-known/matrix/*
+
+    handle @matrix {
+        reverse_proxy /_matrix/* maverick.local:8008 {
+            header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+            header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+        }
+
+        header /.well-known/matrix/* {
+            Content-Type application/json
+            Access-Control-Allow-Origin *
+        }
+
+        respond /.well-known/matrix/server `{"m.server": "www.wigger.one:443"}`
+        respond /.well-known/matrix/client `{"m.homeserver":{"base_url":"https://www.wigger.one"},"m.identity_server":{"base_url":"https://vector.im"}}`
+    }
+
+	handle {
+		redir https://wigger.one
+	}
+
+    encode gzip
+    
+    import header
+    import logs
+}
+
+# Backend
+*.het.wigger.cloud {
+    @caddy host caddy.het.wigger.cloud
+    handle @caddy {
+        metrics
+    }
+    
+    @node_exporter host node.het.wigger.cloud
+    handle @node_exporter {
+        reverse_proxy web.local:4000
+    }
+    
+    encode gzip
+    
+    import header
+    import logs
+}
+
+*.db.wigger.cloud {
+    @node_exporter host node.db.wigger.cloud
+    handle @node_exporter {
+        reverse_proxy db.local:4000
+    }
+    
+    @kopia host kopia.db.wigger.cloud
+    handle @kopia {
+        reverse_proxy db.local:4001
+    }
+    
+    encode gzip
+    
+    import header
+    import logs
+}
+
+*.minecraft.wigger.cloud {
+    @node_exporter host node.minecraft.wigger.cloud
+    handle @node_exporter {
+        reverse_proxy minecraft.local:4000
+    }
+    
+    @kopia host kopia.minecraft.wigger.cloud
+    handle @kopia {
+        reverse_proxy minecraft.local:4001
+    }
+    
+    encode gzip
+    
+    import header
+    import logs
+}

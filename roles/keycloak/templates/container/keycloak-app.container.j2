@@ -5,9 +5,8 @@ ContainerName=keycloak_app
 Image=quay.io/keycloak/keycloak:latest
 Exec=start-dev
 Network=app.network
-Network=db.network
 PublishPort=8080:8080
-Volume=/mnt/container/keycloak/themes/:/opt/keycloak/themes/
+Volume=/mnt/container/keycloak/themes/:/opt/keycloak/themes:Z
 EnvironmentFile=/mnt/container/keycloak/settings.env
 
 [Service]
