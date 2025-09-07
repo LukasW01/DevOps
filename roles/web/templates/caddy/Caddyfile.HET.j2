@@ -80,12 +80,12 @@ hetzner.wigger.cloud, pike.wigger.cloud {
 
 # App
 social.wigger.one {
-	reverse_proxy maverick.local:3000 {
+	reverse_proxy maverick.lan:3000 {
 		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
 		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
 	}
 
-	reverse_proxy /api/v1/streaming* maverick.local:4000 {
+	reverse_proxy /api/v1/streaming* maverick.lan:4000 {
 		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
 		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
 	}
@@ -104,14 +104,14 @@ social.wigger.one {
 }
 
 news.wigger.one {
-	reverse_proxy maverick.local:1234 {
+	reverse_proxy maverick.lan:1234 {
         header_up X-Real-IP {http.request.header.CF-Connecting-IP}
         header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
     }
 
     @lemmy path /api/* /pictrs/* /feeds/* /nodeinfo/* /.well-known/*
 	handle @lemmy {
-		reverse_proxy maverick.local:8536 {
+		reverse_proxy maverick.lan:8536 {
             header_up X-Real-IP {http.request.header.CF-Connecting-IP}
             header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
         }
@@ -119,7 +119,7 @@ news.wigger.one {
 
 	@lemmy-hdr header Accept application/*
 	handle @lemmy-hdr {
-		reverse_proxy maverick.local:8536 {
+		reverse_proxy maverick.lan:8536 {
             header_up X-Real-IP {http.request.header.CF-Connecting-IP}
             header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
         }
@@ -127,7 +127,7 @@ news.wigger.one {
 
 	@lemmy-post method POST
 	handle @lemmy-post {
-			reverse_proxy maverick.local:8536  {
+			reverse_proxy maverick.lan:8536  {
             header_up X-Real-IP {http.request.header.CF-Connecting-IP}
             header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
         }
@@ -144,7 +144,7 @@ www.wigger.one {
     @matrix path /_matrix/* /.well-known/matrix/*
 
     handle @matrix {
-        reverse_proxy /_matrix/* maverick.local:8008 {
+        reverse_proxy /_matrix/* maverick.lan:8008 {
             header_up X-Real-IP {http.request.header.CF-Connecting-IP}
             header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
         }
@@ -177,7 +177,7 @@ www.wigger.one {
     
     @node_exporter host node.het.wigger.cloud
     handle @node_exporter {
-        reverse_proxy web.local:4000
+        reverse_proxy web.lan:4000
     }
     
     encode gzip
@@ -189,12 +189,12 @@ www.wigger.one {
 *.db.wigger.cloud {
     @node_exporter host node.db.wigger.cloud
     handle @node_exporter {
-        reverse_proxy db.local:4000
+        reverse_proxy db.lan:4000
     }
     
     @kopia host kopia.db.wigger.cloud
     handle @kopia {
-        reverse_proxy db.local:4001
+        reverse_proxy db.lan:4001
     }
     
     encode gzip
@@ -206,12 +206,29 @@ www.wigger.one {
 *.minecraft.wigger.cloud {
     @node_exporter host node.minecraft.wigger.cloud
     handle @node_exporter {
-        reverse_proxy minecraft.local:4000
+        reverse_proxy minecraft.lan:4000
     }
     
     @kopia host kopia.minecraft.wigger.cloud
     handle @kopia {
-        reverse_proxy minecraft.local:4001
+        reverse_proxy minecraft.lan:4001
+    }
+    
+    encode gzip
+    
+    import header
+    import logs
+}
+
+*.maverick.wigger.cloud {
+    @node_exporter host node.maverick.wigger.cloud
+    handle @node_exporter {
+        reverse_proxy maverick.lan:4000
+    }
+    
+    @kopia host kopia.maverick.wigger.cloud
+    handle @kopia {
+        reverse_proxy maverick.lan:4001
     }
     
     encode gzip

@@ -37,8 +37,8 @@ ansible_port=22
 #backup="false"
 
 #[web]
-#10.90.10.103
-#
+#10.90.10.10
+
 #[web:vars]
 #hostname="web"
 #region="HET"
@@ -55,7 +55,7 @@ ansible_port=22
 #backup="true"
 
 #[db]
-#10.90.10.102
+#10.90.10.11
 
 #[db:vars]
 #hostname="db"
@@ -64,7 +64,7 @@ ansible_port=22
 #backup="true"
 
 #[minecraft]
-#10.90.10.101
+#10.90.10.30
 
 #[minecraft:vars]
 #hostname="minecraft"
@@ -128,7 +128,7 @@ ansible_port=22
 
 #[maverick]
 #10.90.10.31
-#
+
 #[maverick:vars]
 #hostname="maverick"
 #region="FI"
