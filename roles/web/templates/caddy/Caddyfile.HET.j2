@@ -85,7 +85,7 @@ social.wigger.one {
 		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
 	}
 
-	reverse_proxy /api/v1/streaming* maverick.lan:4000 {
+	reverse_proxy /api/v1/streaming* maverick.lan:4040 {
 		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
 		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
 	}

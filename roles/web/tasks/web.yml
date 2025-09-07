@@ -1,16 +1,4 @@
-- name: Create /mnt/caddy directories & set permissions
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: directory
-    mode: "0770"
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    recurse: true
-  loop:
-    - "/mnt/caddy/data"
-    - "/mnt/caddy/config"
-    - "/mnt/caddy/logs"
-    - "/mnt/caddy/www"
+---
 
 - name: Set up WEB server
   ansible.builtin.template:
@@ -20,7 +8,5 @@
   loop:
     - src: container/caddy.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/caddy.container"
-    - src: container/cloudflared.container.j2
-      dest: "/home/{{ user }}/.config/containers/systemd/cloudflared.container"
     - src: caddy/Caddyfile.{{ hostvars[inventory_hostname]['region'] }}.j2
       dest: "/mnt/caddy/Caddyfile"
