@@ -4,7 +4,7 @@ AutoUpdate=registry
 ContainerName=mastodon_streaming
 Image=ghcr.io/mastodon/mastodon-streaming:latest
 Network=app.network
-PublishPort=4000:4000
+PublishPort=4040:4000
 EnvironmentFile=/mnt/container/mastodon/settings.env
 Exec=node ./streaming
 

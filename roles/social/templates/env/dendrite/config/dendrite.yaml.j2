@@ -43,7 +43,7 @@ global:
   # sections. For monolith deployments using SQLite databases,
   # you must configure the "database" block for each component instead.
   database:
-    connection_string: postgres://dendrite:{{ postgres_pw }}@db.local:5432/dendrite?sslmode=disable
+    connection_string: postgres://dendrite:{{ postgres_pw }}@db.lan:5432/dendrite?sslmode=disable
     max_open_conns: 90
     max_idle_conns: 2
     conn_max_lifetime: -1

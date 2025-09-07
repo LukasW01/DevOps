@@ -125,3 +125,12 @@ ansible_port=22
 #region="CH"
 #docker="false"
 #backup="true"
+
+#[maverick]
+#10.90.10.31
+#
+#[maverick:vars]
+#hostname="maverick"
+#region="FI"
+#docker="false"
+#backup="true"

@@ -4,6 +4,7 @@ AutoUpdate=registry
 ContainerName=dendrite_app
 Image=ghcr.io/element-hq/dendrite-monolith:latest
 Network=app.network
+PublishPort=8008:8008
 Volume=/mnt/container/dendrite/media:/var/dendrite/media:Z
 Volume=/mnt/container/dendrite/config:/etc/dendrite:Z
 Volume=/mnt/container/dendrite/jetstream:/var/dendrite/jetstream:Z
