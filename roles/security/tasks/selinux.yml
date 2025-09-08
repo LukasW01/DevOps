@@ -2,20 +2,7 @@
 - name: Set SELinux to targeted & enforcing
   ansible.posix.selinux:
     policy: targeted
-    state: permissive
-
-- name: SeLinux allow Ports
-  community.general.seport:
-    ports: "{{ item.port }}"
-    proto: "{{ item.proto }}"
-    setype: "{{ item.setype }}"
-    state: present
-  loop:
-    - { port: 22, proto: tcp, setype: ssh_port_t }
-    - { port: 80, proto: tcp, setype: http_port_t }
-    - { port: 443, proto: tcp, setype: http_port_t }
-    - { port: 5432, proto: tcp, setype: postgresql_port_t }
-    - { port: 6379, proto: tcp, setype: redis_port_t }
+    state: enforcing
 
 - name: Allow Container to acces /mnt/*
   community.general.sefcontext:
