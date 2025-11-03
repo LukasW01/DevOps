@@ -9,6 +9,7 @@
   loop:
     - "/mnt/container/db/postgres"
     - "/mnt/container/db/valkey"
+    - "/mnt/container/db/mariadb"
 
 - name: Set up DB
   ansible.builtin.template:
@@ -18,6 +19,8 @@
   loop:
     - src: container/postgres.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/postgres.container"
+    - src: container/mariadb.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/mariadb.container"
     - src: container/valkey.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/valkey.container"
     - src: env/settings.env.j2

@@ -1,0 +1,15 @@
+# mariadb.container
+[Container]
+AutoUpdate=registry
+ContainerName=mariadb
+Image=docker.io/mariadb:12-ubi
+Network=db.network
+PublishPort=3306:3306
+Volume=/mnt/container/db/mariadb/:/var/lib/mysql:Z
+EnvironmentFile=/mnt/container/db/settings.env
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
