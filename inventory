@@ -63,13 +63,22 @@ ansible_port=22
 #docker="false"
 #backup="true"
 
-#[minecraft]
-#10.90.10.30
+#[spock]
+#10.90.10.32
 
-#[minecraft:vars]
-#hostname="minecraft"
-#region="CH"
+#[spock:vars]
+#hostname="spock"
+#region="FI"
 #docker="false"
+#backup="true"
+
+#[romulus]
+#10.90.10.33
+
+#[romulus:vars]
+#hostname="romulus"
+#region="FI"
+#docker="true"
 #backup="true"
 
 #[cooper]
