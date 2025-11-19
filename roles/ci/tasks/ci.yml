@@ -1,4 +1,4 @@
-- name: Create Gitlab config directories
+- name: Create Gitlab directories
   ansible.builtin.file:
     path: "/mnt/container/gitlab/runner"
     state: directory
@@ -32,11 +32,11 @@
     name: "gitlab_runner"
     image: "docker.io/gitlab/gitlab-runner:alpine"
     restart_policy: unless-stopped
+    pull: yes
+    state: "started"
     user: "root:root"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "/mnt/container/gitlab/runner:/etc/gitlab-runner"
     networks:
       - name: "app"
-    pull: true
-    state: "started"

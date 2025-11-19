@@ -2,12 +2,12 @@
 - name: Make sure Watchtower is created and running
   community.general.docker_container:
     name: "watchtower"
-    image: "ghcr.io/containrrr/watchtower:latest"
+    image: "ghcr.io/nicholas-fedor/watchtower:latest"
+    restart_policy: unless-stopped
     pull: yes
     state: "started"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-    restart_policy: unless-stopped
     networks:
       - name: "backend"
     env:
