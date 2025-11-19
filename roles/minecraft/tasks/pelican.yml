@@ -1,21 +1,23 @@
-- name: Create Minecraft directories
+- name: Create Pelican directories
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    mode: "0770"
+    mode: "0777"
     owner: "{{ user }}"
     group: "{{ group }}"
     recurse: true
   loop:
-    - "/mnt/container/minecraft/data"
+    - "/mnt/container/minecraft/app"
+    - "/mnt/container/minecraft/logs"
+    - "/mnt/container/minecraft/caddy"
 
-- name: Set up Minecraft server
+- name: Set up Pelican server
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     mode: '0644'
   loop:
-    - src: container/minecraft.container.j2
-      dest: "/home/{{ user }}/.config/containers/systemd/minecraft.container"
+    - src: container/pelican_panel.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/pelican_panel.container"
     - src: env/settings.env.j2
       dest: "/mnt/container/minecraft/settings.env"
