@@ -1,0 +1,14 @@
+# glitchtip_worker.container
+[Container]
+AutoUpdate=registry
+ContainerName=glitchtip_worker
+Image=docker.io/glitchtip/glitchtip:latest
+Exec=./bin/run-celery-with-beat.sh
+Network=app.network
+EnvironmentFile=/mnt/container/glitchtip/settings.env
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

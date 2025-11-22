@@ -1,0 +1,25 @@
+- name: Create GlitchTip directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0770"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: true
+  loop:
+    - "/mnt/container/glitchtip/themes"
+
+- name: Set up GlitchTip
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - src: container/glitchtip_web.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/glitchtip_web.container"
+    - src: container/glitchtip_migrate.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/glitchtip_migrate.container"
+    - src: container/glitchtip_worker.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/glitchtip_worker.container"
+    - src: env/settings.env.j2
+      dest: "/mnt/container/glitchtip/settings.env"

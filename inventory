@@ -135,6 +135,15 @@ ansible_port=22
 #docker="false"
 #backup="true"
 
+#[bond]
+#192.168.1.38
+
+#[bond:vars]
+#hostname="bond"
+#region="CH"
+#docker="false"
+#backup="true"
+
 #[maverick]
 #10.90.10.31
 
