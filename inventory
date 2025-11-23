@@ -152,3 +152,12 @@ ansible_port=22
 #region="FI"
 #docker="false"
 #backup="true"
+
+#[stark]
+#192.168.1.39
+
+#[stark:vars]
+#hostname="stark"
+#region="FI"
+#docker="false"
+#backup="true"
