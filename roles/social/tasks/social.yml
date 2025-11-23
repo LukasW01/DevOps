@@ -8,11 +8,9 @@
     group: "{{ group }}"
     recurse: true
   loop:
-    - "/mnt/container/dendrite/config"
-    - "/mnt/container/dendrite/jetstream"
-    - "/mnt/container/dendrite/logs"
-    - "/mnt/container/dendrite/media"
-    - "/mnt/container/dendrite/search_index"
+    - "/mnt/container/tuwunel/db"
+    - "/mnt/container/tuwunel/config"
+    - "/mnt/container/tuwunel/backups"
     - "/mnt/container/lemmy/config"
     - "/mnt/container/lemmy/pictrs"
     - "/mnt/container/mastodon"
@@ -29,12 +27,10 @@
       dest: "/mnt/container/lemmy/config/lemmy.hjson"
     - src: env/mastodon/settings.env.j2
       dest: "/mnt/container/mastodon/settings.env"
-    - src: env/dendrite/config/dendrite.yaml.j2
-      dest: "/mnt/container/dendrite/config/dendrite.yaml"
-    - src: env/dendrite/config/matrix_key.pem.j2
-      dest: "/mnt/container/dendrite/config/matrix_key.pem"
-    - src: container/dendrite/dendrite_app.container.j2
-      dest: "/home/{{ user }}/.config/containers/systemd/dendrite_app.container"
+    - src: env/tuwunel/tuwunel.toml.j2
+      dest: "/mnt/container/tuwunel/config/tuwunel.toml"
+    - src: container/tuwunel/tuwunel_app.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/tuwunel_app.container"
     - src: container/lemmy/lemmy_app.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/lemmy_app.container"
     - src: container/lemmy/lemmy_web.container.j2

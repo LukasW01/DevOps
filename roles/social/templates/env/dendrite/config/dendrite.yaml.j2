@@ -112,7 +112,7 @@ global:
     # will send the server notices. These are visible to all users on the deployment.
     local_part: _server
     display_name: Server Alert
-    avatar_url: "https://cdn.wigger.one/cdn-cgi/imagedelivery/XDj7cDl__E4rikVU7dwKwQ/c7862aaf-2382-4822-bd99-0fe9b974e800/original"
+    avatar_url: "https://cdn.wigger.one/img/quadratauge.webp"
     # The room name to be used when sending server notices. This room name will
     # appear in user clients.
     room_name: Server Alert
@@ -181,7 +181,7 @@ client_api:
   turn:
     turn_user_lifetime: "5m"
     turn_uris: [ "turn:turn.matrix.org?transport=udp", "turn:turn.matrix.org?transport=tcp" ]
-    turn_shared_secret: {{ turn_shared_secret }}
+    # turn_shared_secret: ""
     # If your TURN server requires static credentials, then you will need to enter
     # them here instead of supplying a shared secret. Note that these credentials
     # will be visible to clients!

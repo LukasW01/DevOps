@@ -1,0 +1,17 @@
+# tuwunel_app.container
+[Container]
+AutoUpdate=registry
+ContainerName=tuwunel_app
+Image=ghcr.io/matrix-construct/tuwunel:latest
+Network=app.network
+PublishPort=8008:8008
+Volume=/mnt/container/tuwunel/db:/var/lib/tuwunel:Z
+Volume=/mnt/container/tuwunel/backups:/opt/tuwunel/db/backups:Z
+Volume=/mnt/container/tuwunel/config/tuwunel.toml:/etc/tuwunel/tuwunel.toml:ro
+Environment=TUWUNEL_CONFIG=/etc/tuwunel/tuwunel.toml
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
