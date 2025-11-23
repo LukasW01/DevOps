@@ -1,0 +1,18 @@
+# paperless_ngx.container
+[Container]
+AutoUpdate=registry
+ContainerName=paperless_ngx
+Image=ghcr.io/paperless-ngx/paperless-ngx:latest
+Network=app.network
+PublishPort=8000:8000
+Volume=/mnt/container/paperless/data:/usr/src/paperless/data:Z
+Volume=/mnt/container/paperless/media:/usr/src/paperless/media:Z
+Volume=/mnt/container/paperless/export:/usr/src/paperless/export:Z
+Volume=/mnt/container/paperless/consume:/usr/src/paperless/consume:Z
+EnvironmentFile=/mnt/container/paperless/settings.env
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

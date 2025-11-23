@@ -1,0 +1,30 @@
+- name: Create Paperless-NGX directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0770"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: true
+  loop:
+    - "/mnt/container/paperless/data"
+    - "/mnt/container/paperless/media"
+    - "/mnt/container/paperless/export"
+    - "/mnt/container/paperless/consume"
+
+- name: Set up Paperless-NGX
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - src: container/paperless_gotenberg.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/paperless_gotenberg.container"
+    - src: container/paperless_ngx.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/paperless_ngx.container"
+    - src: container/paperless_tika.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/paperless_tika.container"
+    - src: env/settings.env.j2
+      dest: "/mnt/container/paperless/settings.env"
+    
+

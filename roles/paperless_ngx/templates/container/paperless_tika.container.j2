@@ -1,0 +1,12 @@
+# paperless_tika.container
+[Container]
+AutoUpdate=registry
+ContainerName=paperless_tika
+Image=docker.io/apache/tika:latest
+Network=app.network
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

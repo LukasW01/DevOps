@@ -1,0 +1,13 @@
+# paperless_gotenberg.container
+[Container]
+AutoUpdate=registry
+ContainerName=paperless_gotenberg
+Image=docker.io/gotenberg/gotenberg:latest
+Network=app.network
+Exec=gotenberg '--chromium-disable-javascript=true' '--chromium-allow-list=file:///tmp/.*'
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
