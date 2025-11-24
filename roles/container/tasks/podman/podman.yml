@@ -1,9 +1,7 @@
 ---
 - name: Ensure Containers dont shut down after User logs off (loginctl enable-linger)
   ansible.builtin.command: loginctl enable-linger {{ user }}
-  register: loginctl_enable_linger
   changed_when: false
-  when: user is defined
 
 - name: Create /mnt/container directories & set permissions
   ansible.builtin.file:
