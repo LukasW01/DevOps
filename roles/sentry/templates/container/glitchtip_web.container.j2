@@ -5,8 +5,8 @@ ContainerName=glitchtip_web
 Image=docker.io/glitchtip/glitchtip:latest
 Network=app.network
 PublishPort=8000:8000
-Volume=/mnt/container/glitchtip/themes/favicon.ico:/code/static/favicon.ico:ro
-Volume=/mnt/container/glitchtip/themes/sentry.svg:/code/static/assets/images/glitchtip-logo-v1.svg:ro
+Volume=/mnt/container/glitchtip/themes/favicon.ico:/code/static/assets/images/favicon.ico:ro
+Volume=/mnt/container/glitchtip/themes/sentry.svg:/code/static/assets/images/sentry.svg:ro
 EnvironmentFile=/mnt/container/glitchtip/settings.env
 
 [Service]
