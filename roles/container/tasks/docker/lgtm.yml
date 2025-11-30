@@ -1,0 +1,44 @@
+---
+- name: Create LGTM directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0770"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: true
+  loop:
+    - "/mnt/container/backend/alloy/data"
+    - "/mnt/container/backend/alloy/conf"
+
+- name: Set up LGTM
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - src: alloy/config.alloy.j2
+      dest: "/mnt/container/backend/alloy/conf/config.alloy"
+
+- name: Make sure Grafana Alloy is created and running
+  community.general.docker_container:
+    name: "alloy"
+    hostname: "{{ hostvars[inventory_hostname]['hostname'] }}"
+    image: "grafana/alloy:latest"
+    restart_policy: unless-stopped
+    pull: yes
+    state: "started"
+    volumes:
+      - "/mnt/container/backend/alloy/data:/var/lib/alloy/data"
+      - "/mnt/container/backend/alloy/conf:/etc/alloy"
+      - "/:/rootfs:ro"
+      - "/sys:/sys:ro"
+      - "/run:/run:ro"
+      - "/var/log:/var/log:ro"
+      - "/run/udev/data:/run/udev/data:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    ports:
+      - "12345:12345"
+    networks:
+      - name: "backend"
+    command: "run '--server.http.listen-addr=0.0.0.0:12345' '--storage.path=/var/lib/alloy/data' /etc/alloy/config.alloy"

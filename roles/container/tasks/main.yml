@@ -16,3 +16,7 @@
 - name: Include docker/container
   ansible.builtin.include_tasks: docker/container.yml
   when: hostvars[inventory_hostname]['docker'] == "true"
+
+- name: Include docker/lgtm
+  ansible.builtin.include_tasks: docker/lgtm.yml
+  when: hostvars[inventory_hostname]['docker'] == "true" and hostvars[inventory_hostname]['monitoring'] == "alloy"
