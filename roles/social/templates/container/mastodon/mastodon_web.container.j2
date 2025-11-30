@@ -7,6 +7,8 @@ Network=app.network
 PublishPort=3000:3000
 Exec=bash -c 'rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000'
 EnvironmentFile=/mnt/container/mastodon/settings.env
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/mastodon_web.log
 
 [Service]
 Restart=always

@@ -6,6 +6,8 @@ Image=ghcr.io/mastodon/mastodon:latest
 Network=app.network
 EnvironmentFile=/mnt/container/mastodon/settings.env
 Exec=bundle exec sidekiq
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/mastodon_sidekiq.log
 
 [Service]
 Restart=always

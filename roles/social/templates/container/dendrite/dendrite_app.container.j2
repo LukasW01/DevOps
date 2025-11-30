@@ -10,6 +10,8 @@ Volume=/mnt/container/dendrite/config:/etc/dendrite:Z
 Volume=/mnt/container/dendrite/jetstream:/var/dendrite/jetstream:Z
 Volume=/mnt/container/dendrite/logs:/var/dendrite/logs:Z
 Volume=/mnt/container/dendrite/search_index:/var/dendrite/searchindex:Z
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/dendrite_app.log
 
 [Service]
 Restart=always

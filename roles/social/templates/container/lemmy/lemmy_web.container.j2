@@ -6,6 +6,8 @@ Image=docker.io/dessalines/lemmy-ui:0.19.13
 Network=app.network
 PublishPort=1234:1234
 EnvironmentFile=/mnt/container/lemmy/settings.env
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/lemmy_web.log
 
 [Service]
 Restart=always

@@ -7,6 +7,8 @@ Network=app.network
 PublishPort=4040:4000
 EnvironmentFile=/mnt/container/mastodon/settings.env
 Exec=node ./streaming
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/mastodon_streaming.log
 
 [Service]
 Restart=always

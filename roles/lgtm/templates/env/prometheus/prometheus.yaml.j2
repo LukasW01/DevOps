@@ -4,10 +4,10 @@ global:
   evaluation_interval: 15s
 
 scrape_configs:
-  - job_name: web_ch
+  - job_name: web_{{ hostvars[inventory_hostname]['hostname'] }}
     scheme: https
     static_configs:
-      - targets: ['caddy.ch.wigger.cloud']
+      - targets: ['caddy.{{ hostvars[inventory_hostname]['hostname'] }}.wigger.cloud']
 
 alerting:
   alertmanagers:

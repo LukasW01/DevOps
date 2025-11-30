@@ -188,3 +188,13 @@ ansible_port=22
 #docker="false"
 #backup="true"
 #monitoring="lgtm"
+
+#[lgtm]
+#10.90.10.34
+
+#[lgtm:vars]
+#hostname="lgtm"
+#region="FI"
+#docker="false"
+#backup="true"
+#monitoring="lgtm"

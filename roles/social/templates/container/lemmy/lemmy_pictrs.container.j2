@@ -7,6 +7,8 @@ Network=app.network
 PublishPort=8080:8080
 Volume=/mnt/container/lemmy/pictrs:/mnt:Z
 EnvironmentFile=/mnt/container/lemmy/settings.env
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/lemmy_pictrs.log
 
 [Service]
 Restart=always
