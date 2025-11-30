@@ -4,4 +4,4 @@
 
 - name: Include alloy
   ansible.builtin.include_tasks: alloy.yml
-  when: hostvars[inventory_hostname]['docker'] == "false" and hostvars[inventory_hostname]['monitoring'] == "alloy"
+  when: hostvars[inventory_hostname]['docker'] == "false"

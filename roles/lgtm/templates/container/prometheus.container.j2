@@ -8,6 +8,8 @@ PublishPort=9090:9090
 Volume=/mnt/container/prometheus/data:/prometheus:Z
 Volume=/mnt/container/prometheus/conf:/etc/prometheus:ro
 Exec='--config.file=/etc/prometheus/prometheus.yaml' --web.enable-remote-write-receiver
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/prometheus.log
 
 [Service]
 Restart=always

@@ -8,6 +8,8 @@ PublishPort=3100:3100
 Volume=/mnt/container/loki/data:/loki:Z
 Volume=/mnt/container/loki/conf:/etc/loki:ro
 Exec='-config.file=/etc/loki/config.yaml'
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/loki.log
 
 [Service]
 Restart=always
