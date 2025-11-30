@@ -1,0 +1,28 @@
+- name: Create LGTM directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0777"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: true
+  loop:
+    - "/mnt/container/loki/data"
+    - "/mnt/container/loki/conf"
+    - "/mnt/container/prometheus/data"
+    - "/mnt/container/prometheus/conf"
+
+- name: Set up LGTM
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - src: container/loki.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/loki.container"
+    - src: container/prometheus.container.j2
+      dest: "/home/{{ user }}/.config/containers/systemd/prometheus.container"
+    - src: env/prometheus/prometheus.yaml.j2
+      dest: "/mnt/container/prometheus/conf/prometheus.yaml"
+    - src: env/loki/config.yaml.j2
+      dest: "/mnt/container/loki/conf/config.yaml"

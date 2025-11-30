@@ -9,7 +9,6 @@
     - "/mnt/container/backend/kopia/config"
     - "/mnt/container/backend/kopia/logs"
     - "/mnt/container/backend/kopia/cache"
-    - "/mnt/container/backend/node_exporter"
 
 - name: Set up Backend
   ansible.builtin.template:

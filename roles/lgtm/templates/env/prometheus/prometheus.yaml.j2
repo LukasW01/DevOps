@@ -1,0 +1,16 @@
+---
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: web_ch
+    scheme: https
+    static_configs:
+      - targets: ['caddy.ch.wigger.cloud']
+
+alerting:
+  alertmanagers:
+    - scheme: http
+      static_configs:
+        - targets: [ 'alertmanager.local:9093' ]

@@ -158,6 +158,15 @@ ansible_port=22
 
 #[stark:vars]
 #hostname="stark"
-#region="FI"
+#region="CH"
+#docker="false"
+#backup="true"
+
+#[lgtm]
+#192.168.1.40
+
+#[lgtm:vars]
+#hostname="lgtm"
+#region="CH"
 #docker="false"
 #backup="true"
