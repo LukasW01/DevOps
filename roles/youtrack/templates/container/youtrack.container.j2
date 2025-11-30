@@ -10,6 +10,8 @@ Volume=/mnt/container/youtrack/logs/:/opt/youtrack/logs:Z
 Volume=/mnt/container/youtrack/conf/:/opt/youtrack/conf:Z
 Volume=/mnt/container/youtrack/backups/:/opt/youtrack/backups:Z
 Volume=/mnt/container/youtrack/temp/:/opt/youtrack/temp:Z
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/youtrack.log
 
 [Service]
 Restart=always

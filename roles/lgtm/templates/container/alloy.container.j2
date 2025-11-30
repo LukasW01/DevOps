@@ -1,0 +1,23 @@
+# alloy.container
+[Container]
+AutoUpdate=registry
+ContainerName=alloy
+Image=docker.io/grafana/alloy:latest
+Network=backend.network
+HostName={{ hostvars[inventory_hostname]['hostname'] }}
+PublishPort=12345:12345
+Volume=/mnt/container/backend/alloy/data:/var/lib/alloy/data:Z
+Volume=/mnt/container/backend/alloy/conf:/etc/alloy:ro
+Volume=/:/rootfs:ro
+Volume=/sys:/sys:ro
+Volume=/mnt/container/log:/mnt/container/log:ro
+Volume=/run:/run:ro
+Volume=/var/log:/var/log:ro
+Volume=/run/udev/data:/run/udev/data:ro
+Exec=run '--server.http.listen-addr=0.0.0.0:12345' '--storage.path=/var/lib/alloy/data' /etc/alloy/config.alloy
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

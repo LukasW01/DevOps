@@ -4,6 +4,8 @@ AutoUpdate=registry
 ContainerName=paperless_tika
 Image=docker.io/apache/tika:latest
 Network=app.network
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/paperless_tika.log
 
 [Service]
 Restart=always

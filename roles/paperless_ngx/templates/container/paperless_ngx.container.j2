@@ -10,6 +10,8 @@ Volume=/mnt/container/paperless/media:/usr/src/paperless/media:Z
 Volume=/mnt/container/paperless/export:/usr/src/paperless/export:Z
 Volume=/mnt/container/paperless/consume:/usr/src/paperless/consume:Z
 EnvironmentFile=/mnt/container/paperless/settings.env
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/paperless_ngx.log
 
 [Service]
 Restart=always

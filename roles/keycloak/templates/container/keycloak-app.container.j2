@@ -8,6 +8,8 @@ Network=app.network
 PublishPort=8080:8080
 Volume=/mnt/container/keycloak/themes/:/opt/keycloak/themes:Z
 EnvironmentFile=/mnt/container/keycloak/settings.env
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/keycloak.log
 
 [Service]
 Restart=always

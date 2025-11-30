@@ -237,11 +237,6 @@ de-wit.dev {
         metrics
     }
     
-    @node_exporter host node.fi.wigger.cloud
-    handle @node_exporter {
-        reverse_proxy localhost:4000
-    }
-    
     encode gzip
     
     import header

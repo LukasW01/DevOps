@@ -5,6 +5,8 @@ ContainerName=paperless_gotenberg
 Image=docker.io/gotenberg/gotenberg:latest
 Network=app.network
 Exec=gotenberg '--chromium-disable-javascript=true' '--chromium-allow-list=file:///tmp/.*'
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/paperless_gotenberg.log
 
 [Service]
 Restart=always

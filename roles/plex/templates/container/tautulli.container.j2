@@ -7,6 +7,8 @@ Network=app.network
 PublishPort=8181:8181
 Volume=/mnt/container/tautulli/:/config:Z
 Environment=TZ=Europe/Amsterdam PUID=1000 PGID=1000
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/tautulli.log
 
 [Service]
 Restart=always

@@ -1,2 +1,7 @@
 - name: Include lgtm
   ansible.builtin.include_tasks: lgtm.yml
+  when: hostvars[inventory_hostname]['monitoring'] == "lgtm"
+
+- name: Include alloy
+  ansible.builtin.include_tasks: alloy.yml
+  when: hostvars[inventory_hostname]['monitoring'] == "alloy"

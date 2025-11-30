@@ -1,0 +1,23 @@
+- name: Create LGTM directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0770"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: true
+  loop:
+    - "/mnt/container/backend/alloy/data"
+    - "/mnt/container/backend/alloy/conf"
+    - "/mnt/container/log"
+
+- name: Set up LGTM
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0644'
+  loop:
+    - src: container/alloy.container.j2
+      dest: "/etc/containers/systemd/alloy.container"
+    - src: env/alloy/config.alloy.j2
+      dest: "/mnt/container/backend/alloy/conf/config.alloy"

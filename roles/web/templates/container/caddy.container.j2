@@ -12,6 +12,8 @@ Volume=/mnt/caddy/data:/data:Z
 Volume=/mnt/caddy/config:/config:Z
 Volume=/mnt/caddy/logs:/var/log:Z
 Volume=/mnt/caddy/www:/usr/share/www:Z
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/caddy.log
 
 [Service]
 Restart=always

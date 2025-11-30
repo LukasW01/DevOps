@@ -123,62 +123,6 @@ hetzner.wigger.cloud, pike.wigger.cloud {
         metrics
     }
     
-    @node_exporter host node.het.wigger.cloud
-    handle @node_exporter {
-        reverse_proxy web.lan:4000
-    }
-    
-    encode gzip
-    
-    import header
-    import logs
-}
-
-*.db.wigger.cloud {
-    @node_exporter host node.db.wigger.cloud
-    handle @node_exporter {
-        reverse_proxy db.lan:4000
-    }
-    
-    @kopia host kopia.db.wigger.cloud
-    handle @kopia {
-        reverse_proxy db.lan:4001
-    }
-    
-    encode gzip
-    
-    import header
-    import logs
-}
-
-*.minecraft.wigger.cloud {
-    @node_exporter host node.minecraft.wigger.cloud
-    handle @node_exporter {
-        reverse_proxy minecraft.lan:4000
-    }
-    
-    @kopia host kopia.minecraft.wigger.cloud
-    handle @kopia {
-        reverse_proxy minecraft.lan:4001
-    }
-    
-    encode gzip
-    
-    import header
-    import logs
-}
-
-*.maverick.wigger.cloud {
-    @node_exporter host node.maverick.wigger.cloud
-    handle @node_exporter {
-        reverse_proxy maverick.lan:4000
-    }
-    
-    @kopia host kopia.maverick.wigger.cloud
-    handle @kopia {
-        reverse_proxy maverick.lan:4001
-    }
-    
     encode gzip
     
     import header

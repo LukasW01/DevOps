@@ -7,6 +7,8 @@ Network=app.network
 PublishPort=5055:5055
 Volume=/mnt/container/overseerr/:/app/config:Z
 Environment=LOG_LEVEL=debug TZ=Europe/Amsterdam PORT=5055
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/overseerr.log
 
 [Service]
 Restart=always

@@ -8,6 +8,8 @@ PublishPort=6379:6379
 Volume=/mnt/container/db/valkey/:/data:Z
 EnvironmentFile=/mnt/container/db/settings.env
 Exec=valkey-server --port 6379 --requirepass {{ redis_pw }} 
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/valkey.log
 
 [Service]
 Restart=always

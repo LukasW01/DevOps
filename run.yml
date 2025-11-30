@@ -10,3 +10,4 @@
     - role: system
     - role: security
     - role: container
+    - role: lgtm

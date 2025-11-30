@@ -5,6 +5,8 @@ ContainerName=quadratauge
 Image=ghcr.io/lukasw01/quadratauge:latest
 Network=app.network
 Environment=DISCORD_TOKEN={{ discord_token_quadratauge }}
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/quadratauge.log
 
 [Service]
 Restart=always

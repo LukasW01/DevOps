@@ -6,6 +6,8 @@ Image=docker.io/cloudflare/cloudflared:latest
 Network=web.network
 Network=backend.network
 Exec=tunnel --no-autoupdate run --token {{ warp_token }}
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/cloudflared.log
 
 [Service]
 Restart=always

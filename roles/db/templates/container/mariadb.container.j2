@@ -7,6 +7,8 @@ Network=db.network
 PublishPort=3306:3306
 Volume=/mnt/container/db/mariadb/:/var/lib/mysql:Z
 EnvironmentFile=/mnt/container/db/settings.env
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/mariadb.log
 
 [Service]
 Restart=always

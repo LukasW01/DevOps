@@ -8,6 +8,8 @@ PublishPort=8080:8080
 Volume=/mnt/container/bitwarden/data:/etc/bitwarden:Z
 Volume=/mnt/container/bitwarden/logs:/var/log/bitwarden:Z
 EnvironmentFile=/mnt/container/bitwarden/settings.env
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/bitwarden.log
 
 [Service]
 Restart=always

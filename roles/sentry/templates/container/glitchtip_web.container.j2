@@ -8,6 +8,8 @@ PublishPort=8000:8000
 Volume=/mnt/container/glitchtip/themes/favicon.ico:/code/static/assets/images/favicon.ico:ro
 Volume=/mnt/container/glitchtip/themes/sentry.svg:/code/static/assets/images/sentry.svg:ro
 EnvironmentFile=/mnt/container/glitchtip/settings.env
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/glitchtip_web.log
 
 [Service]
 Restart=always
