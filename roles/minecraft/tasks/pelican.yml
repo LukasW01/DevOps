@@ -21,3 +21,5 @@
       dest: "/home/{{ user }}/.config/containers/systemd/pelican_panel.container"
     - src: env/settings.env.j2
       dest: "/mnt/container/minecraft/settings.env"
+    - src: caddy/caddyfile.j2
+      dest: "/mnt/container/minecraft/caddy/Caddyfile"
