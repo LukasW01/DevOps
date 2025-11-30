@@ -5,7 +5,11 @@ ContainerName=cloudflared
 Image=docker.io/cloudflare/cloudflared:latest
 Network=web.network
 Network=backend.network
-Exec=tunnel --no-autoupdate run --token {{ warp_token }}
+{% if hostvars[inventory_hostname]['region'] == "CH" %}
+Exec=tunnel --no-autoupdate run --token {{ warp_token_ch }}
+{% elif hostvars[inventory_hostname]['region'] == "FI" %}
+Exec=tunnel --no-autoupdate run --token {{ warp_token_fi }}
+{% endif %}
 LogDriver=k8s-file
 LogOpt=path=/mnt/container/log/cloudflared.log
 
