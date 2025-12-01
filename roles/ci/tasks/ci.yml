@@ -16,17 +16,6 @@
     - src: runner/config.toml.j2
       dest: "/mnt/container/gitlab/runner/config.toml"
 
-- name: Add Gitlab Server-IP to Host
-  ansible.builtin.lineinfile:
-    create: true
-    path: /etc/hosts
-    search_string: "git.wigger.one"
-    line: "192.168.1.36 git.wigger.one"
-    mode: '0644'
-    owner: root
-    group: root
-    state: present
-
 - name: Start Gitlab Runner
   community.general.docker_container:
     name: "gitlab_runner"
