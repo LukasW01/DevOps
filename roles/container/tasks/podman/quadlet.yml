@@ -27,7 +27,30 @@
   loop:
     - "network/rootfull/"
     #- "volume/rootfull/"
-    - "container/backend/rootfull/"
+
+- name: Set up Backend
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: '0755'
+  loop:
+    - src: container/backend/rootfull/alloy.container.j2
+      dest: "/etc/containers/systemd/alloy.container"
+    - src: container/backend/rootfull/kopia.container.j2
+      dest: "/etc/containers/systemd/kopia.container"
+  when: hostvars[inventory_hostname]['docker'] == "false"
+
+- name: Ensure containers.conf exists and is configured
+  ansible.builtin.blockinfile:
+    path: "{{ item }}"
+    create: true
+    mode: 0644
+    block: |
+      [containers]
+      log_size_max=52428800
+  loop:
+    - "/etc/containers/containers.conf"
+    - "~/.config/containers/containers.conf"
     
 # Important: Quadlet expects this to be owned by the user, or else it will fail to start the containers
 - name: Change ownership for config folder

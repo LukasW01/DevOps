@@ -9,6 +9,10 @@
   ansible.builtin.include_tasks: env/backend.yml
   when: hostvars[inventory_hostname]['backup'] == "true"
 
+- name: Include env/lgtm
+  ansible.builtin.include_tasks: env/lgtm.yml
+  when: hostvars[inventory_hostname]['docker'] == "false" and (hostvars[inventory_hostname]['monitoring'] == "alloy" or hostvars[inventory_hostname]['monitoring'] == "lgtm")
+
 - name: Include docker/docker
   ansible.builtin.include_tasks: docker/docker.yml
   when: hostvars[inventory_hostname]['docker'] == "true"

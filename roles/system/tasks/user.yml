@@ -8,7 +8,7 @@
     createhome: true
     home: "/home/{{ user }}"
     state: present
-  when: ansible_os_family == "RedHat"
+  when: ansible_facts["os_family"] == "RedHat"
 
 - name: Add a SUDO user (debian)
   ansible.builtin.user:
@@ -19,28 +19,28 @@
     createhome: true
     home: "/home/{{ user }}"
     state: present
-  when: ansible_os_family == "Debian"
+  when: ansible_facts["os_family"] == "Debian"
 
 - name: Update root password (redhat)
   ansible.builtin.user:
     name: root
     password: "{{ password | password_hash('sha512', '7n7XzaPpV3bMvpFJ') }}"
-  when: ansible_os_family == "RedHat"
+  when: ansible_facts["os_family"] == "RedHat"
   
 - name: Update root password (debian)
   ansible.builtin.user:
       name: root
       password: "{{ password | password_hash('sha512', '7n7XzaPpV3bMvpFJ') }}"
-  when: ansible_os_family == "Debian"
+  when: ansible_facts["os_family"] == "Debian"
 
 - name: Add ssh key to remote host
   ansible.posix.authorized_key:
     user: "{{ user }}"
     state: present
-    key: "{{ lookup('file', '{{ item }}') }}"
+    key: "{{ lookup('file', item) }}"
     path: /home/{{ user }}/.ssh/authorized_keys
   loop:
-    - 'ssh/ec_key.pub'
+    - '~/.ssh/ec_key.pub'
 
 - name: Set hostname
   ansible.builtin.hostname:

@@ -16,5 +16,5 @@
     dest: "{{ item.dest }}"
     mode: '0644'
   loop:
-    - src: backend/kopia/settings.env.j2
+    - src: env/backend/kopia/settings.env.j2
       dest: /mnt/container/backend/kopia/settings.env

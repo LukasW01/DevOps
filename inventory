@@ -4,7 +4,7 @@
 ansible_user=root
 ansible_ssh_pass=root
 ansible_port=22
-#ansible_ssh_private_key_file=ssh/ec_key
+#ansible_ssh_private_key_file=~/.ssh/ec_key
 
 #[windows]
 #localhost
@@ -26,7 +26,7 @@ ansible_port=22
 #hostname="web"
 #region="CH"
 #docker="false"
-#backup="true"
+#backup="false"
 #monitoring="alloy"
 
 #[web]
@@ -129,11 +129,11 @@ ansible_port=22
 #backup="true"
 #monitoring="alloy"
 
-#[forrest]
-#192.168.1.37
+#[ci]
+#192.168.1.31
 
-#[forrest:vars]
-#hostname="forrest"
+#[ci:vars]
+#hostname="ci"
 #region="CH"
 #docker="true"
 #backup="false"

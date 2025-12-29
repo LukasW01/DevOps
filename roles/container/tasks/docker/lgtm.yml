@@ -17,7 +17,7 @@
     dest: "{{ item.dest }}"
     mode: '0644'
   loop:
-    - src: alloy/config.alloy.j2
+    - src: env/alloy/docker/config.alloy.j2
       dest: "/mnt/container/backend/alloy/conf/config.alloy"
 
 - name: Make sure Grafana Alloy is created and running

@@ -11,13 +11,17 @@
     - "/mnt/container/backend/alloy/conf"
     - "/mnt/container/log"
 
+- name: Allow LGTM to read /run/log/journal
+  community.general.sefcontext:
+    target: '/run/log/journal'
+    setype: svirt_sandbox_file_t
+    state: present
+
 - name: Set up LGTM
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     mode: '0644'
   loop:
-    - src: container/alloy.container.j2
-      dest: "/etc/containers/systemd/alloy.container"
-    - src: env/alloy/config.alloy.j2
+    - src: env/alloy/podman/config.alloy.j2
       dest: "/mnt/container/backend/alloy/conf/config.alloy"
