@@ -26,5 +26,3 @@
       dest: "/home/{{ user }}/.config/containers/systemd/paperless_tika.container"
     - src: env/settings.env.j2
       dest: "/mnt/container/paperless/settings.env"
-    
-

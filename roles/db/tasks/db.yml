@@ -25,5 +25,3 @@
       dest: "/home/{{ user }}/.config/containers/systemd/valkey.container"
     - src: env/settings.env.j2
       dest: "/mnt/container/db/settings.env"
-    
-
