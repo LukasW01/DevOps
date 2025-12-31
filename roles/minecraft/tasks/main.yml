@@ -1,5 +1,2 @@
-- name: Include pelican
-  ansible.builtin.include_tasks: pelican.yml
-
-- name: Include wings
-  ansible.builtin.include_tasks: wings.yml
+- name: Include minecraft
+  ansible.builtin.include_tasks: minecraft.yml

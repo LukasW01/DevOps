@@ -1,0 +1,107 @@
+header-footer:
+  enabled: true
+  designs:
+    world-test:
+      display-condition: '%world%=test'
+      header:
+      - HEADER 'Quadratauge'
+      footer:
+      - FOOTER 'Quadratauge'
+    default:
+      header:
+      - <#1178F5>&m                                                </#BF00E6>
+      - '&3&lQuadratauge'
+      - '&r&7Online players: &f%online%'
+      - ''
+      footer:
+      - ''
+      - '%animation:time%'
+      - 'Ping: %ping%'
+      - ''
+      - '&r&7Website wigger.one'
+      - <#1178F5>&m                                                </#BF00E6>
+
+tablist-name-formatting:
+  enabled: true
+  disable-condition: '%world%=disabledworld'
+
+playerlist-objective:
+  enabled: true
+  value: '%ping%'
+  fancy-value: '   '
+  title: TAB
+  render-type: INTEGER
+  disable-condition: '%world%=disabledworld'
+
+prevent-spectator-effect:
+  enabled: true
+
+placeholders:
+  date-format: dd.MM.yyyy
+  time-format: '[HH:mm:ss / h:mm a]'
+  time-offset: 0
+  register-tab-expansion: true
+
+ping-spoof:
+  enabled: false
+  value: 0
+
+placeholder-output-replacements:
+  '%essentials_vanished%':
+    'yes': '&7| Vanished'
+    'no': ''
+
+conditions:
+  nick:
+    conditions:
+    - '%player%=%essentials_nickname%'
+    true: '%player%'
+    false: ~%essentials_nickname%
+
+placeholder-refresh-intervals:
+  default-refresh-interval: 500
+  '%server_uptime%': 1000
+  '%server_tps_1_colored%': 1000
+  '%server_unique_joins%': 5000
+  '%player_health%': 200
+  '%player_ping%': 1000
+  '%vault_prefix%': 1000
+  '%rel_factionsuuid_relation_color%': 1000
+
+assign-groups-by-permissions: true
+
+primary-group-finding-list:
+- Owner
+- Admin
+- Mod
+- Helper
+- default
+
+permission-refresh-interval: 1000
+
+debug: false
+
+config-version: 2
+use-online-uuid-in-tablist: true
+compensate-for-packetevents-bug: true
+
+per-world-playerlist:
+  enabled: true
+
+proxy-support:
+  enabled: false
+  type: PLUGIN
+  plugin:
+    name: RedisBungee
+  redis:
+    url: redis://:password@localhost:6379/0
+  rabbitmq:
+    exchange: plugin
+    url: amqp://guest:guest@localhost:5672/%2F
+components:
+  minimessage-support: true
+  disable-shadow-for-heads: true
+
+mysql:
+  enabled: false
+
