@@ -1,5 +1,3 @@
-image: python:3.13-slim
-
 stages: 
   - test
   - deploy
@@ -10,17 +8,21 @@ include:
   - template: Security/SAST.gitlab-ci.yml
 
 ansible-lint:
-  stage: test
-  before_script:
-    - pip install ansible ansible-lint
+  stage: linting
+  image: registry.gitlab.com/pipeline-components/ansible-lint:latest
+  artifacts:
+    when: always
+    reports:
+      junit: ansible-lint.xml
   script:
-    - ansible-lint --offline -x 106 roles  
+    - ansible-lint --offline -x 106 roles
+      | ansible-lint-junit -o ansible-lint.xml
 
 ansible-playbook:
   stage: deploy
+  image: alpine/ansible:latest
   when: manual
   before_script:
-    - pip install ansible ansible-lint
     - ansible-galaxy install -r requirements.yml --force
   script: 
     - ansible-playbook -i inventory run.yml --vault-password-file vault.txt --become-password-file become.txt
