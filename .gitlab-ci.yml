@@ -11,13 +11,13 @@ include:
 ansible-lint:
   stage: lint
   image: registry.gitlab.com/pipeline-components/ansible-lint:latest
+  script:
+    - ansible-lint --offline -x 106 roles
+      | ansible-lint-junit -o ansible-lint.xml
   artifacts:
     when: always
     reports:
       junit: ansible-lint.xml
-  script:
-    - ansible-lint --offline -x 106 roles
-      | ansible-lint-junit -o ansible-lint.xml
 
 ansible-playbook:
   stage: deploy
