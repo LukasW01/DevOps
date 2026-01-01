@@ -19,23 +19,23 @@
   loop:
     - src: container/minecraft.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/minecraft.container"
-    - src: env/minecraft/settings.env.j2
+    - src: env/settings.env.j2
       dest: "/mnt/container/minecraft/settings.env"
 
 - name: Copy config folder
   ansible.builtin.copy:
     src: config/
-    dest: /mnt/container/minecraft/data/config/
+    dest: "/mnt/container/minecraft/data/config/"
     mode: preserve
     directory_mode: preserve
 
 - name: Copy mods.properties file
   ansible.builtin.copy:
-    src: mods.properties
-    dest: /mnt/container/minecraft/data/mods/mods.properties
+    src: mods/mods.properties
+    dest: "/mnt/container/minecraft/data/mods/mods.properties"
     mode: "0644"
 
-- name: Set up Minecraft modpacks with secrets
+- name: Set up Minecraft modpacks with Ansible Vault secrets
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
