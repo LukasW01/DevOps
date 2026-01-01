@@ -67,13 +67,13 @@ init7.wigger.cloud {
 
 # App
 plex.wigger.one {
-    reverse_proxy {
-        to https://joel.local:32400
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
-    }
+	reverse_proxy {
+		to https://joel.local:32400
+		transport http {
+			tls
+			tls_insecure_skip_verify
+		}
+	}
 	
 	encode gzip
 	
