@@ -1,110 +1,95 @@
 # Import
 (header) {
-    header {
-        Permissions-Policy "interest-cohort=()"
-        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-        X-Content-Type-Options "nosniff"
-        X-Frame-Options "SAMEORIGIN"
-        X-XSS-Protection "1; mode=block"
-        Referrer-Policy "same-origin"
-        Content-Security-Policy "upgrade-insecure-requests; frame-ancestors 'self'"
-    }
-}
-
-(ipfilter) {
-    @ban {
-        not remote_ip 123.123.123.123
-        path *
-    }
-    redir @ban https://wigger.one/ban/
+	header {
+		Permissions-Policy "interest-cohort=()"
+		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "SAMEORIGIN"
+		X-XSS-Protection "1; mode=block"
+		Referrer-Policy "same-origin"
+		Content-Security-Policy "upgrade-insecure-requests; frame-ancestors 'self'"
+	}
 }
 
 (logs) {
-    log {
-        output file /var/log/caddy.log {
-            roll_size 1gb
-            roll_keep 5
-            roll_keep_for 720h
-        }
-    }
-}
-
-(request_body) {
-    request_body {
-        max_size 15MB
-    }
+	log {
+		output file /var/log/caddy.log {
+			roll_size 1gb
+			roll_keep 5
+			roll_keep_for 720h
+		}
+	}
 }
 
 (git) {
-    respond /.git/* "Access denied" 403 {
-        close
-    }
+	respond /.git/* "Access denied" 403 {
+		close
+	}
 }
 
 (handle_errors_404) {
-    handle_errors {
-        @404 expression {err.status_code} == 404
-            handle @404 {
-            rewrite * /404.html
-            file_server
-        }
-    }
+	handle_errors {
+		@404 expression {err.status_code} == 404
+			handle @404 {
+			rewrite * /404.html
+			file_server
+		}
+	}
 }
 
 (handle_errors_index) {
-    handle_errors {
-        @404 expression {err.status_code} == 404
-        handle @404 {
-            rewrite * /index.html
-            file_server
-        }
-    }
+	handle_errors {
+		@404 expression {err.status_code} == 404
+		handle @404 {
+			rewrite * /index.html
+			file_server
+		}
+	}
 }
 
+# Globals
 {
-    #CDN-ACME
-    acme_dns cloudflare {{ cloudflare_api }}
-    #Debug-Mode
-    #debug
-    #Metrics
-    servers {
-        metrics
-    }
+	#CDN-ACME
+	acme_dns cloudflare {{ cloudflare_api }}
+	#Debug-Mode
+	#debug
+	#Metrics
+	servers {
+		metrics
+		trusted_proxies static 192.168.1.0/24
+	}
 }
 
 # Host
 init7.wigger.cloud {
-    redir https://wigger.cloud
+	redir https://wigger.cloud
 }
 
 # App
-*.wigger.one {
-    @plex host plex.wigger.one
-    handle @plex {
-        reverse_proxy {
-            to https://joel.local:32400
-            transport http {
-                tls
-                tls_insecure_skip_verify
-            }
+plex.wigger.one {
+    reverse_proxy {
+        to https://joel.local:32400
+        transport http {
+            tls
+            tls_insecure_skip_verify
         }
     }
-    
-    encode gzip
-    
-    import header
-    import logs
+	
+	encode gzip
+	
+	import header
+	import logs
 }
 
 # Backend
 *.ch.wigger.cloud {
-    @caddy host caddy.ch.wigger.cloud
-    handle @caddy {
-        metrics
-    }
-    
-    encode gzip
-    
-    import header
-    import logs
+	@caddy host caddy.ch.wigger.cloud
+	handle @caddy {
+		metrics
+	}
+	
+	encode gzip
+	
+	import header
+	import logs
 }

@@ -11,14 +11,6 @@
 	}
 }
 
-(ipfilter) {
-	@ban {
-		not remote_ip 123.123.123.123
-		path *
-	}
-	redir @ban https://wigger.one/ban/
-}
-
 (logs) {
 	log {
 		output file /var/log/access.log {
@@ -29,16 +21,10 @@
 	}
 }
 
-(request_body) {
-	request_body {
-		max_size 15MB
-	}
-}
-
 (git) {
-    respond /.git/* "Access denied" 403 {
-        close
-    }
+	respond /.git/* "Access denied" 403 {
+		close
+	}
 }
 
 (handle_errors_404) {
@@ -63,15 +49,15 @@
 
 # Globals
 {
-    #CDN-ACME
-    acme_dns cloudflare {{ cloudflare_api }}
-    #Debug-Mode
-    #debug
-    #Metrics
-    servers {
-        metrics
-        trusted_proxies static 10.90.10.0/24
-    }
+	#CDN-ACME
+	acme_dns cloudflare {{ cloudflare_api }}
+	#Debug-Mode
+	#debug
+	#Metrics
+	servers {
+		metrics
+		trusted_proxies static 10.90.10.0/24
+	}
 }
 
 # Host
@@ -82,33 +68,57 @@ hetzner.wigger.cloud, pike.wigger.cloud {
 # App
 :4000 {
 	reverse_proxy maverick.lan:1234 {
-        header_up X-Real-IP {http.request.header.CF-Connecting-IP}
-        header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
-    }
+		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+	}
 
-    @lemmy path /api/* /pictrs/* /feeds/* /nodeinfo/* /.well-known/*
+	@lemmy path /api/* /pictrs/* /feeds/* /nodeinfo/* /.well-known/*
 	handle @lemmy {
 		reverse_proxy maverick.lan:8536 {
-            header_up X-Real-IP {http.request.header.CF-Connecting-IP}
-            header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
-        }
+			header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+			header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+		}
 	}
 
 	@lemmy-hdr header Accept application/*
 	handle @lemmy-hdr {
 		reverse_proxy maverick.lan:8536 {
-            header_up X-Real-IP {http.request.header.CF-Connecting-IP}
-            header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
-        }
+			header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+			header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+		}
 	}
 
 	@lemmy-post method POST
 	handle @lemmy-post {
 			reverse_proxy maverick.lan:8536  {
-            header_up X-Real-IP {http.request.header.CF-Connecting-IP}
-            header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
-        }
+			header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+			header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+		}
 	}
+
+	encode gzip
+
+	import header
+	import logs
+}
+
+:5000 {
+	reverse_proxy maverick.lan:3000 {
+		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+	}
+
+	reverse_proxy /api/v1/streaming* maverick.lan:4040 {
+		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+	}
+
+	header /sw.js  Cache-Control "public, max-age=0";
+	header /emoji* Cache-Control "public, max-age=31536000, immutable"
+	header /packs* Cache-Control "public, max-age=31536000, immutable"
+	header /system/accounts/avatars* Cache-Control "public, max-age=31536000, immutable"
+	header /system/media_attachments/files* Cache-Control "public, max-age=31536000, immutable"
+	header Access-Control-Allow-Origin *
 
 	encode gzip
 
@@ -118,13 +128,13 @@ hetzner.wigger.cloud, pike.wigger.cloud {
 
 # Backend
 *.het.wigger.cloud {
-    @caddy host caddy.het.wigger.cloud
-    handle @caddy {
-        metrics
-    }
-    
-    encode gzip
-    
-    import header
-    import logs
+	@caddy host caddy.het.wigger.cloud
+	handle @caddy {
+		metrics
+	}
+	
+	encode gzip
+	
+	import header
+	import logs
 }
