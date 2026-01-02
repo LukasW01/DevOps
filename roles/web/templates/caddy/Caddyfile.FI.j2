@@ -56,169 +56,79 @@
 	#Metrics
 	servers {
 		metrics
+		trusted_proxies static 10.90.10.0/24
 	}
-	#WebDAV
-	order webdav before file_server
 }
 
 # Host
-fi.wigger.cloud, web.wigger.cloud {
+hetzner.wigger.cloud, pike.wigger.cloud {
 	redir https://wigger.cloud
 }
 
-# Services
-cdn.braendli.dev, cdn.de-wit.dev, cdn.wigger.one {
-	root * /usr/share/www/web-cdn/
-	file_server {
-		hide .git
-		browse
+# App
+:4000 {
+	reverse_proxy maverick.lan:1234 {
+		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
 	}
 
-	header {
-		Access-Control-Allow-Origin *
-	}
-	
-	encode gzip
-	
-	import logs
-	import git
-}
-
-api.wigger.one {
-	handle {
-		respond /* `{"http": "418 - I'm a teapot"}` 418
-	}
-
-	handle_path /ip {
-		vars realip {remote_host}
-		
-		@cf header CF-Connecting-IP *
-		vars @cf realip {header.CF-Connecting-IP}
-		
-		@xf header X-Forwarded-For *
-		vars @xf realip {header.X-Forwarded-For}
-		
-		templates
-		header Content-Type text/plain
-		respond "{vars.realip}"
-	}
-		
-	handle_path /health {
-		respond `{"status": 200, "message": "OK!"}` 200
-	}
-
-	handle_path /data/* {
-		root * /usr/share/www/web-api/
-		file_server
-	}
-	
-	encode gzip
-	
-	import handle_errors_404
-	import header
-	import logs
-	import git
-}
-
-webdav.wigger.one {
-	 handle {
-			 respond /* `{"http": "418 - I'm a teapot"}` 418
-	 }
-
-	 @dav path /dav/*
-	 handle @dav {
-			 @notget not method GET
-			 route @notget {
-					 basic_auth {
-							 git $2a$14$rQ7TeAs/b.r8Kf6Lhnscg.MtmO0sxfcSOj2MzkWBXjRu7oJPuVWZu
-					 }
-					 webdav /dav/* {
-							 root /usr/share/
-							 prefix /dav
-					 }
-			}
-	 }
-
-	encode gzip
-
-	import header
-	import logs
-}
-
-wigger.one {
-	root * /usr/share/www/web-one/
-	file_server
-
-	@matrix path /.well-known/matrix/*
-	handle @matrix {
-		header /.well-known/matrix/* {
-			Content-Type application/json
-			Access-Control-Allow-Origin *
+	@lemmy path /api/* /pictrs/* /feeds/* /nodeinfo/* /.well-known/*
+	handle @lemmy {
+		reverse_proxy maverick.lan:8536 {
+			header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+			header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
 		}
+	}
 
-		respond /.well-known/matrix/server `{"m.server": "matrix.wigger.one:443"}`
-		respond /.well-known/matrix/client `{"m.homeserver":{"base_url":"https://matrix.wigger.one"},"m.identity_server":{"base_url":"https://vector.im"}}`
+	@lemmy-hdr header Accept application/*
+	handle @lemmy-hdr {
+		reverse_proxy maverick.lan:8536 {
+			header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+			header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+		}
+	}
+
+	@lemmy-post method POST
+	handle @lemmy-post {
+			reverse_proxy maverick.lan:8536  {
+			header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+			header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+		}
 	}
 
 	encode gzip
 
-	import handle_errors_404
 	import header
 	import logs
-	import git
 }
 
-wigger.tld {
-	root * /usr/share/www/web-tld/
-	file_server
+:5000 {
+	reverse_proxy maverick.lan:3000 {
+		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+	}
+
+	reverse_proxy /api/v1/streaming* maverick.lan:4040 {
+		header_up X-Real-IP {http.request.header.CF-Connecting-IP}
+		header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+	}
+
+	header /sw.js  Cache-Control "public, max-age=0";
+	header /emoji* Cache-Control "public, max-age=31536000, immutable"
+	header /packs* Cache-Control "public, max-age=31536000, immutable"
+	header /system/accounts/avatars* Cache-Control "public, max-age=31536000, immutable"
+	header /system/media_attachments/files* Cache-Control "public, max-age=31536000, immutable"
+	header Access-Control-Allow-Origin *
 
 	encode gzip
 
-	import handle_errors_404
 	import header
 	import logs
-	import git
 }
 
-wigger.dev {
-	root * /usr/share/www/web-dev/public/
-	file_server
-
-	encode gzip
-
-	import handle_errors_404
-	import header
-	import logs
-	import git
-}
-
-braendli.dev {
-	root * /usr/share/www/web-florin/
-	file_server
-
-	encode gzip
-
-	import handle_errors_404
-	import header
-	import logs
-	import git
-}
-
-de-wit.dev {
-	root * /usr/share/www/web-elin/
-	file_server
-
-	encode gzip
-
-	import handle_errors_404
-	import header
-	import logs
-	import git
-}
- 
 # Backend
-*.fi.wigger.cloud {
-	@caddy host caddy.fi.wigger.cloud
+*.het.wigger.cloud {
+	@caddy host caddy.het.wigger.cloud
 	handle @caddy {
 		metrics
 	}
