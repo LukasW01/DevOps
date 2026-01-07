@@ -15,8 +15,9 @@ ntp_tinker_panic: true
 # See: http://support.ntp.org/bin/view/Servers/NTPPoolServers
 ntp_area: ''
 ntp_servers:
-  - "time.cloudflare.com iburst"
-  - "time.google.com iburst"
+  - "ntp11.metas.ch iburst"
+  - "ntp12.metas.ch iburst"
+  - "ntp13.metas.ch iburst"
 
 ntp_restrict:
   - "127.0.0.1"
