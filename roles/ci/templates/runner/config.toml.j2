@@ -9,7 +9,7 @@ shutdown_timeout = 0
 [[runners]]
     name = "gitlab-runner"
     url = "https://git.wigger.one:8443"
-    token = "{{ runner_token }}"
+    token = "{% if hostvars[inventory_hostname]['region'] == "CH" %}{{ runner_token_ch }}{% elif hostvars[inventory_hostname]['region'] == "FI" %}{{ runner_token_fi }}{% endif %}"
     executor = "docker"
     limit = 0
     request_concurrency = 1

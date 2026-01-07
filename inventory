@@ -139,6 +139,16 @@ ansible_port=22
 #backup="false"
 #monitoring="alloy"
 
+#[ci]
+#10.90.10.32
+
+#[ci:vars]
+#hostname="ci"
+#region="FI"
+#docker="true"
+#backup="false"
+#monitoring="alloy"
+
 #[fragile]
 #192.168.1.32
 
