@@ -33,7 +33,7 @@
 
 - name: Mount SMB volume
   ansible.posix.mount:
-    src: //192.168.1.6/media
+    src: //192.168.1.25/media
     path: /mnt/media
     opts: "ro,username={{ smb_user }},password={{ smb_password }},vers=3,uid=1000,gid=1000,iocharset=utf8"
     fstype: cifs
