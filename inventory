@@ -208,3 +208,13 @@ ansible_port=22
 #docker="false"
 #backup="true"
 #monitoring="lgtm"
+
+#[minecraft]
+#10.90.10.33
+
+#[minecraft:vars]
+#hostname="minecraft"
+#region="FI"
+#docker="false"
+#backup="true"
+#monitoring="lgtm"

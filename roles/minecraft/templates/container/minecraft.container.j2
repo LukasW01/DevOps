@@ -10,6 +10,8 @@ PublishPort=24454:24454/udp
 Volume=/mnt/container/minecraft/data:/data:Z
 EnvironmentFile=/mnt/container/minecraft/settings.env
 PodmanArgs=--tty
+LogDriver=k8s-file
+LogOpt=path=/mnt/container/log/minecraft.log
 
 [Service]
 Restart=always

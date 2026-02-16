@@ -26,8 +26,7 @@
   ansible.builtin.copy:
     src: config/
     dest: "/mnt/container/minecraft/data/config/"
-    mode: preserve
-    directory_mode: preserve
+    mode: "0770"
 
 - name: Copy mods.properties file
   ansible.builtin.copy:
@@ -41,7 +40,7 @@
     dest: "{{ item.dest }}"
     mode: '0644'
   loop:
-    - src: config/simple-discord-compat.toml
+    - src: config/simple-discord-compat.toml.j2
       dest: "/mnt/container/minecraft/data/config/simple-discord-link/simple-discord-compat.toml"
-    - src: config/simple-discord-link.toml
+    - src: config/simple-discord-link.toml.j2
       dest: "/mnt/container/minecraft/data/config/simple-discord-link/simple-discord-link.toml"
