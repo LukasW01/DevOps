@@ -3,9 +3,10 @@
 AutoUpdate=registry
 ContainerName=keycloak_app
 Image=quay.io/keycloak/keycloak:latest
-Exec=start-dev
+Exec=start
 Network=app.network
 PublishPort=8080:8080
+PublishPort=9000:9000
 Volume=/mnt/container/keycloak/themes/:/opt/keycloak/themes:Z
 EnvironmentFile=/mnt/container/keycloak/settings.env
 LogDriver=k8s-file
