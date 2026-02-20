@@ -1,14 +1,14 @@
-# overseerr.container
+# seerr.container
 [Container]
 AutoUpdate=registry
-ContainerName=overseerr
-Image=ghcr.io/sct/overseerr:latest
+ContainerName=seerr
+Image=ghcr.io/seerr-team/seerr:latest
 Network=app.network
 PublishPort=5055:5055
-Volume=/mnt/container/overseerr/:/app/config:Z
+Volume=/mnt/container/seerr/:/app/config:Z
 Environment=LOG_LEVEL=debug TZ=Europe/Amsterdam PORT=5055
 LogDriver=k8s-file
-LogOpt=path=/mnt/container/log/overseerr.log
+LogOpt=path=/mnt/container/log/seerr.log
 
 [Service]
 Restart=always
