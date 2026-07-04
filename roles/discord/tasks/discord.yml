@@ -1,3 +1,14 @@
+- name: Create Discord directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0770"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    recurse: true
+  loop:
+    - "/mnt/container/discord/doplarr"
+
 - name: Set up Discord bots
   ansible.builtin.template:
     src: "{{ item.src }}"
@@ -8,3 +19,5 @@
       dest: "/home/{{ user }}/.config/containers/systemd/doplarr.container"
     - src: container/quadratauge.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/quadratauge.container"
+    - src: env/doplarr/config.toml.j2
+      dest: "/mnt/container/discord/doplarr/config.toml"

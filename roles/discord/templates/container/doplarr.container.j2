@@ -2,9 +2,9 @@
 [Container]
 AutoUpdate=registry
 ContainerName=doplarr
-Image=ghcr.io/kiranshila/doplarr:latest
+Image=ghcr.io/activexray/doplarr_rs:latest
 Network=app.network
-Environment=DISCORD__MAX_RESULTS=25 DISCORD__REQUESTED_MSG_STYLE=:embed LOG_LEVEL=:info PARTIAL_SEASONS=true OVERSEERR__DEFAULT_ID=5 DISCORD__TOKEN={{ discord_token_request }} OVERSEERR__URL=http://joel.local:5055 OVERSEERR__API={{ overseerr_api }}
+Volume=/mnt/container/discord/doplarr/config.toml:/config.toml:ro
 LogDriver=k8s-file
 LogOpt=path=/mnt/container/log/doplarr.log
 
