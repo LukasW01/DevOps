@@ -23,5 +23,5 @@
       dest: "/home/{{ user }}/.config/containers/systemd/caddy.container"
     - src: container/cloudflared.container.j2
       dest: "/home/{{ user }}/.config/containers/systemd/cloudflared.container"
-    - src: caddy/Caddyfile.{{ hostvars[inventory_hostname]['region'] }}.j2
+    - src: caddy/Caddyfile.{{ hostvars[inventory_hostname]['local'] }}.j2
       dest: "/mnt/caddy/Caddyfile"

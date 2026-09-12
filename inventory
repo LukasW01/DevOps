@@ -25,16 +25,18 @@ ansible_port=22
 #[web:vars]
 #hostname="web"
 #region="CH"
+#local="CH"
 #docker="false"
 #backup="false"
 #monitoring="alloy"
 
 #[web]
-#157.180.35.146
+#46.224.54.134
 
 #[web:vars]
 #hostname="web"
-#region="HET"
+#region="FI"
+#local="DE"
 #docker="false"
 #backup="false"
 #monitoring="alloy"
@@ -45,6 +47,7 @@ ansible_port=22
 #[web:vars]
 #hostname="web"
 #region="FI"
+#local="FI"
 #docker="false"
 #backup="false"
 #monitoring="alloy"

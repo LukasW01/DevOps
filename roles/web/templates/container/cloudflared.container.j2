@@ -5,9 +5,9 @@ ContainerName=cloudflared
 Image=docker.io/cloudflare/cloudflared:latest
 Network=web.network
 Network=backend.network
-{% if hostvars[inventory_hostname]['region'] == "CH" %}
+{% if hostvars[inventory_hostname]['local'] == "CH" %}
 Exec=tunnel --no-autoupdate run --token {{ warp_token_ch }}
-{% elif hostvars[inventory_hostname]['region'] == "FI" %}
+{% elif hostvars[inventory_hostname]['local'] == "FI" %}
 Exec=tunnel --no-autoupdate run --token {{ warp_token_fi }}
 {% endif %}
 LogDriver=k8s-file

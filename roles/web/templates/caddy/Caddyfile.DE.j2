@@ -62,7 +62,7 @@
 }
 
 # Host
-fi.wigger.cloud, web.wigger.cloud {
+de.wigger.cloud, web.wigger.cloud {
 	redir https://wigger.cloud
 }
 
@@ -181,7 +181,7 @@ wigger.tld {
 }
 
 wigger.dev {
-	root * /usr/share/www/web-dev/public/
+	root * /usr/share/www/web-dev/
 	file_server
 
 	encode gzip
@@ -217,8 +217,8 @@ de-wit.dev {
 }
  
 # Backend
-*.fi.wigger.cloud {
-	@caddy host caddy.fi.wigger.cloud
+*.de.wigger.cloud {
+	@caddy host caddy.de.wigger.cloud
 	handle @caddy {
 		metrics
 	}

@@ -5,7 +5,7 @@
 /* Loki Write Endpoint */
 loki.write "default" {
   endpoint {
-    url = "http://lgtm.{{ hostvars[inventory_hostname]['region'] | lower }}.wigger.cloud:3100/loki/api/v1/push"
+    url = "https://loki.{{ hostvars[inventory_hostname]['region'] | lower }}.wigger.cloud/loki/api/v1/push"
   }
   external_labels = {}
 }
@@ -13,7 +13,7 @@ loki.write "default" {
 /* Prometheus Remote Write Endpoint */
 prometheus.remote_write "default" {
   endpoint {
-    url = "http://lgtm.{{ hostvars[inventory_hostname]['region'] | lower }}.wigger.cloud:9090/api/v1/write"
+    url = "https://prometheus.{{ hostvars[inventory_hostname]['region'] | lower }}.wigger.cloud/api/v1/write"
   }
 }
 
