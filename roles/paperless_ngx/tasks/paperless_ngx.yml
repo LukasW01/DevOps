@@ -1,16 +1,4 @@
-- name: Create Paperless-NGX directories
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: directory
-    mode: "0770"
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    recurse: true
-  loop:
-    - "/mnt/container/paperless/data"
-    - "/mnt/container/paperless/media"
-    - "/mnt/container/paperless/export"
-    - "/mnt/container/paperless/consume"
+
 
 - name: Set up Paperless-NGX
   ansible.builtin.template:
